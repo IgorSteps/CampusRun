@@ -5,7 +5,7 @@ public class Movement : MonoBehaviour
     public float Speed; 
     void Start()
     {
-        Debug.Log("Left boundary: " + Constants.LEFT_BOUNDARY + "\n " + "Right boundary:" + Constants.RIGHT_BOUNDARY);
+        //Debug.Log("Left boundary: " + Constants.LEFT_BOUNDARY + "\n " + "Right boundary:" + Constants.RIGHT_BOUNDARY);
     }
 
     void Update()
