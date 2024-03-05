@@ -2,12 +2,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public float FrontSpeed;
-    public float SideSpeed;
-    void Start()
-    {
-        //Debug.Log("Left boundary: " + Constants.LEFT_BOUNDARY + "\n " + "Right boundary:" + Constants.RIGHT_BOUNDARY);
-    }
+    public float FrontSpeed = Constants.DEFAULT_FORWARD_SPEED;
+    public float SideSpeed = Constants.DEFAULT_SIDE_SPEED;
 
     void Update()
     {
