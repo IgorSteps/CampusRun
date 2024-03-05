@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public float Speed; 
+    public float FrontSpeed;
+    public float SideSpeed;
     void Start()
     {
         //Debug.Log("Left boundary: " + Constants.LEFT_BOUNDARY + "\n " + "Right boundary:" + Constants.RIGHT_BOUNDARY);
@@ -16,19 +17,19 @@ public class Movement : MonoBehaviour
     private void movePlayer()
     {
         // Fowards.
-        transform.Translate(Speed * Time.deltaTime * Vector3.forward, Space.World);
+        transform.Translate(FrontSpeed * Time.deltaTime * Vector3.forward, Space.World);
 
         // Sideways.
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             if(this.gameObject.transform.position.x > Constants.LEFT_BOUNDARY)
-                transform.Translate(Speed * Time.deltaTime * Vector3.left);
+                transform.Translate(SideSpeed * Time.deltaTime * Vector3.left);
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
             if (this.gameObject.transform.position.x < Constants.RIGHT_BOUNDARY)
-                transform.Translate(Speed * Time.deltaTime * Vector3.right);
+                transform.Translate(SideSpeed * Time.deltaTime * Vector3.right);
         }
     }
 }
