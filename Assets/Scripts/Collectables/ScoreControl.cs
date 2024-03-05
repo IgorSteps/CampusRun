@@ -7,7 +7,8 @@ public class ScoreControl : MonoBehaviour
     public static int s_Score = 0;
     public GameObject ScoreNumber;
 
-    // Update is called once per frame
+    // TODO: Maybe add a conditional if score hasn't changed don't do GetComponent
+    // to boost performance?
     void Update()
     {
         ScoreNumber.GetComponent<TextMeshProUGUI>().text = s_Score.ToString();
