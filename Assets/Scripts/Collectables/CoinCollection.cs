@@ -11,5 +11,4 @@ public class CoinCollection : MonoBehaviour
         ScoreControl.s_Score += 1;
         this.gameObject.SetActive(false);
     }
-
 }
