@@ -8,6 +8,7 @@ public class CoinCollection : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         coinCollectSound.Play();
+        ScoreControl.s_Score += 1;
         this.gameObject.SetActive(false);
     }
 
