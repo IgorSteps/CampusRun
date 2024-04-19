@@ -28,6 +28,5 @@ public class Movement : MonoBehaviour
     public void OnMove(InputValue value)
     {
         _movement = value.Get<Vector2>();
-        Debug.Log("Move input received: " + _movement);
     }
 }
