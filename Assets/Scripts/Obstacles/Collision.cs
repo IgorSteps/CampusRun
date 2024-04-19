@@ -2,21 +2,25 @@ using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
-    public GameObject ScreenController;
-    public GameObject Player;
-    public GameObject PlayerModel;
+    [SerializeField]
+    private GameObject _screenController;
+    [SerializeField]
+    private GameObject _player;
+    [SerializeField]
+    private GameObject _playerModel;
+
     private Movement _playerMovement;
     private Animator _playerAnimator;
 
     public void Start()
     {
-        _playerMovement = Player.GetComponent<Movement>();
-        _playerAnimator = PlayerModel.GetComponent<Animator>();
+        _playerMovement = _player.GetComponent<Movement>();
+        _playerAnimator = _playerModel.GetComponent<Animator>();
     }
     private void OnTriggerEnter(Collider other)
     {
         _playerMovement.enabled = false; // stop player from moving.
         _playerAnimator.Play("Stumble Backwards"); // play stumble animation.
-        ScreenController.GetComponent<ShowEndScreen>().enabled = true; // show end screen.
+        _screenController.GetComponent<ShowEndScreen>().enabled = true; // show end screen.
     }
 }
