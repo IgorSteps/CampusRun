@@ -3,24 +3,26 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    public float FrontSpeed = Constants.DEFAULT_FORWARD_SPEED;
-    public float SideSpeed = Constants.DEFAULT_SIDE_SPEED;
+    [SerializeField]
+    private float _frontSpeed = Constants.DEFAULT_FORWARD_SPEED;
+    [SerializeField]
+    private float _sideSpeed = Constants.DEFAULT_SIDE_SPEED;
 
     private Vector2 _movement;
 
     void Update()
     {
         // Forward movement
-        transform.Translate(FrontSpeed * Time.deltaTime * Vector3.forward, Space.World);
+        transform.Translate(_frontSpeed * Time.deltaTime * Vector3.forward, Space.World);
         
         // Side movement.
         if (_movement.x < 0 && this.gameObject.transform.position.x > Constants.LEFT_BOUNDARY)
         {
-            transform.Translate(SideSpeed * Time.deltaTime * Vector3.left);
+            transform.Translate(_sideSpeed * Time.deltaTime * Vector3.left);
         }
         else if (_movement.x > 0 && this.gameObject.transform.position.x < Constants.RIGHT_BOUNDARY)
         {
-            transform.Translate(SideSpeed * Time.deltaTime * Vector3.right);
+            transform.Translate(_sideSpeed * Time.deltaTime * Vector3.right);
         }
     }
 

@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class ShowEndScreen : MonoBehaviour
 {
-    public GameObject EndScreen;
-
+    [SerializeField]
+    private GameObject _endScreen;
     void Start()
     {
         StartCoroutine(Ending());
@@ -13,7 +13,7 @@ public class ShowEndScreen : MonoBehaviour
 
     IEnumerator Ending()
     {
-        EndScreen.SetActive(true);
+        _endScreen.SetActive(true);
         yield return new WaitForSeconds(4);
         SceneManager.LoadScene(0);
     }

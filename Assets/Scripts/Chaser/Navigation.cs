@@ -3,16 +3,17 @@ using UnityEngine.AI;
 
 public class Navigation : MonoBehaviour
 {
-    public Transform Player;
-    private NavMeshAgent Agent;
+    [SerializeField]
+    private Transform _player;
+    private NavMeshAgent _agent;
 
     void Start()
     {
-        Agent = this.gameObject.GetComponent<NavMeshAgent>();
+        _agent = this.gameObject.GetComponent<NavMeshAgent>();
     }
 
     void Update()
     {
-        Agent.destination = Player.position;
+        _agent.destination = _player.position;
     }
 }

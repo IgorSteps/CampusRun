@@ -2,14 +2,11 @@ using UnityEngine;
 
 public class Rotate : MonoBehaviour
 {
-    public float Speed = 1.0f;
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private float _speed = Constants.DEFAULT_ROATION_SPEED;
 
     void Update()
     {
-        transform.Rotate(0.0f, Speed, 0.0f, Space.World);
+        transform.Rotate(0.0f, _speed, 0.0f, Space.World);
     }
 }
