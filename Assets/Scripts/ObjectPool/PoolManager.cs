@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 /// <summary>
@@ -8,57 +9,74 @@ public class PoolManager : MonoBehaviour
 {
     // Singleton instance of the Pool Manager.
     public static PoolManager s_Instance;
-    // The prefab for the level sections.
-    [SerializeField] private GameObject _sectionPrefab;
-    // Initial size of the pool.
-    [SerializeField] private int _poolSize = 10;
-    // Pool queue.
-    private Queue<GameObject> _pool = new Queue<GameObject>();
+    // List of all pools.
+    [SerializeField] private List<Pool> _pools; 
+    // Pool of pools.
+    private Dictionary<string, Queue<GameObject>> _poolDictionary;
 
     /// <summary>
-    /// Awake populates the object _pool with a predefined number of section objects.
+    /// Awake populates the pool dictionary with different pools.
     /// </summary>
     private void Awake()
     {
         s_Instance = this;
+        _poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
-        // Populate the _pool with deactivated instances of section prefab.
-        for (int i = 0; i < _poolSize; i++)
+        // Populate the dictionary with different pools(section, coin, obstacle).
+        foreach (Pool pool in _pools)
         {
-            GameObject newSection = Instantiate(_sectionPrefab);
-            newSection.SetActive(false);
-            _pool.Enqueue(newSection);
+            Queue<GameObject> objectPool = new Queue<GameObject>();
+
+            // Popualte the pool(eg. the section pool) with deactivated instances of their prefab.
+            for (int i = 0; i < pool.poolSize; i++)
+            {
+                GameObject obj = Instantiate(pool.prefab);
+                obj.SetActive(false);
+                objectPool.Enqueue(obj);
+            }
+
+            // Add that pool to dictionary.
+            _poolDictionary.Add(pool.name, objectPool);
         }
     }
 
     /// <summary>
-    /// GetSection gets a section from the top of the pool queue or creates a new one if all sections are in use.
+    /// GetObject gets the object from the top of a pool queue with the given name.
     /// </summary>
-    public GameObject GetSection()
+    public GameObject GetObject(string name)
     {
-        if (_pool.Count > 0)
+        if (!_poolDictionary.ContainsKey(name))
         {
-            GameObject section = _pool.Dequeue();
-            section.SetActive(true);
-            return section;
+            Debug.LogWarning("Pool '" + name + "' doesn't exist.");
+            return null;
+        }
+
+        if (_poolDictionary[name].Count > 0)
+        {
+            GameObject obj = _poolDictionary[name].Dequeue();
+            obj.SetActive(true);
+            return obj;
         }
         else
         {
-            // TODO: Cap this somehow to avoid excessive memory use?
-            // Create a new section if all objects are already in use.
-            GameObject newSection = Instantiate(_sectionPrefab);
-            newSection.SetActive(true);
-            return newSection;
+            // TODO: Dynamically create extra objects if necessary.
+            Debug.LogWarning("All objects in the '" + name + "' pool are in use.");
+            return null;
         }
     }
 
     /// <summary>
-    /// ReturnSection deactivates a section and places it back into the pool. 
+    /// ReturnObject deactivates and places the given object back into the pool with the given name. 
     /// </summary>
-    public void ReturnSection(GameObject section)
+    public void ReturnObject(GameObject obj, string name)
     {
-        // This makes the section reusable.
-        section.SetActive(false);
-        _pool.Enqueue(section);
+        if (!_poolDictionary.ContainsKey(name))
+        {
+            Debug.LogWarning("Pool '" + name + "' doesn't exist.");
+            return;
+        }
+
+        obj.SetActive(false);
+        _poolDictionary[name].Enqueue(obj);
     }
 }

@@ -46,7 +46,7 @@ public class LevelController : MonoBehaviour
 
     private void SpawnSection()
     {
-        GameObject section = PoolManager.s_Instance.GetSection();
+        GameObject section = PoolManager.s_Instance.GetObject("Section");
         section.transform.position = Vector3.forward * _spawnZ;
         _spawnZ += _sectionLength;
         activeSections.Add(section);
@@ -56,6 +56,6 @@ public class LevelController : MonoBehaviour
     {
         GameObject section = activeSections[0];
         activeSections.RemoveAt(0);
-        PoolManager.s_Instance.ReturnSection(section);
+        PoolManager.s_Instance.ReturnObject(section, "Section");
     }
 }
