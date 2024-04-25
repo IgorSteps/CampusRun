@@ -4,25 +4,42 @@ using UnityEngine.UIElements;
 
 public class SectionPopulator : MonoBehaviour
 {
-    public Transform sectionStart; // Start position for coin generation in a section
-
+    [SerializeField] private int _numOfCoinsInColumn = 15;
     private void OnEnable()
     {
-        PopulateObstacles();
+        Populate();
     }
 
-    private void PopulateObstacles()
+    private void Populate()
     {
         // This places the first thing at the center of the right-most row
         Vector3 startPosition = new(6.0f, 1.5f, 0.0f);
-      
+        // Randomly select one column to be free of obstacles
+        int freeColumn = Random.Range(0, 3);
+
         for (int column = 0; column < 3; column++)
         {
             // Because the ground is 9, by subtracting 3 from each
             startPosition.x -= 3;
-            for (int row = 0; row < 20; row++)
+            for (int row = 0; row < _numOfCoinsInColumn; row++)
             {
-                PlaceCoin(startPosition.x, startPosition.y, startPosition.z + row);
+                if (column == freeColumn)
+                {
+                    // Place only coins in the free column
+                    PlaceCoin(startPosition.x, startPosition.y, startPosition.z + row);
+                }
+                else
+                {
+                    // Randomly decide to place a coin or an obstacle
+                    if (Random.Range(0, 2) == 0) // 50% chance for each
+                    {
+                        PlaceCoin(startPosition.x, startPosition.y, startPosition.z + row);
+                    }
+                    else
+                    {
+                        PlaceObstacle(startPosition.x, startPosition.y, startPosition.z + row);
+                    }
+                }
             }
         }
     }

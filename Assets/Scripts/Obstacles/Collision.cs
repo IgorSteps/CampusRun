@@ -2,12 +2,9 @@ using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _screenController;
-    [SerializeField]
-    private GameObject _player;
-    [SerializeField]
-    private GameObject _playerModel;
+    [SerializeField] private GameObject _screenController;
+    [SerializeField] private GameObject _player;
+    [SerializeField] private GameObject _playerModel;
 
     private Movement _playerMovement;
     private Animator _playerAnimator;

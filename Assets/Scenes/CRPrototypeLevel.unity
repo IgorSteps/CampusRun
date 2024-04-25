@@ -353,7 +353,7 @@ MonoBehaviour:
     poolSize: 500
   - name: Obstacle
     prefab: {fileID: 6420528519984805812, guid: 2b423d15df1f2d444829a74b988ae149, type: 3}
-    poolSize: 60
+    poolSize: 300
 --- !u!114 &303009128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,6 +1397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _frontSpeed: 5
   _sideSpeed: 4
+  _playerModel: {fileID: 362129045}
 --- !u!143 &1150559823
 CharacterController:
   m_ObjectHideFlags: 0
