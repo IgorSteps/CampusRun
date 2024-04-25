@@ -37,6 +37,7 @@ public class PoolManager : MonoBehaviour
 
             // Add that pool to dictionary.
             _poolDictionary.Add(pool.name, objectPool);
+            Debug.Log("Added '"+ pool.name + "' pool to pool dictionary");
         }
     }
 
