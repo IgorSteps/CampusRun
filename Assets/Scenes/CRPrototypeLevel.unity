@@ -2224,6 +2224,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Section
       objectReference: {fileID: 0}
+    - target: {fileID: 352479105611211277, guid: bd5bad09ffa02354091df7b190e153e4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 352479105611211277, guid: bd5bad09ffa02354091df7b190e153e4, type: 3}
+      propertyPath: m_TagString
+      value: Section
+      objectReference: {fileID: 0}
     - target: {fileID: 2659980802380402733, guid: bd5bad09ffa02354091df7b190e153e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

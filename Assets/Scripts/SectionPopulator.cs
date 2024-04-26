@@ -7,6 +7,7 @@ public class SectionPopulator : MonoBehaviour
     [SerializeField] private int _numOfCoinsInColumn = 15;
     private void OnEnable()
     {
+        Debug.Log("Enabled section");
         Populate();
     }
 

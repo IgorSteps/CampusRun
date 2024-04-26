@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Rotate : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed = Constants.DEFAULT_ROATION_SPEED;
+    [SerializeField] private float _speed = Constants.DEFAULT_ROATION_SPEED;
 
     void Update()
     {

@@ -28,7 +28,7 @@ public class LevelController : MonoBehaviour
         for (int i = 0; i < _numSectionsOnScreen; i++)
         {
             SpawnSection();
-        }
+        }    
     }
 
     /// <summary>
@@ -50,7 +50,6 @@ public class LevelController : MonoBehaviour
         section.transform.position = Vector3.forward * _spawnZ;
         _spawnZ += _sectionLength;
         activeSections.Add(section);
-       // Debug.Log("Spawned section");
     }
 
     private void RecycleSection()
@@ -58,6 +57,5 @@ public class LevelController : MonoBehaviour
         GameObject section = activeSections[0];
         activeSections.RemoveAt(0);
         PoolManager.s_Instance.ReturnObject(section, "Section");
-       //  Debug.Log("Recycled section");
     }
 }

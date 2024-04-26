@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class CoinCollection : MonoBehaviour
 {
-    [SerializeField]
     private AudioSource _coinCollectSound;
+
+    private void Start()
+    {
+        _coinCollectSound = GameObject.Find("Audio").GetComponent<AudioSource>();    
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         _coinCollectSound.Play();
         ScoreControl.s_Score += 1;
-        this.gameObject.SetActive(false);
+        PoolManager.s_Instance.ReturnObject(gameObject, "Coin");
     }
 }

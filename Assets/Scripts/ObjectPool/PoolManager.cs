@@ -19,6 +19,7 @@ public class PoolManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        Debug.Log("Waking up Pool Manager");
         s_Instance = this;
         _poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
