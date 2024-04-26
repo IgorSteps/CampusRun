@@ -2,12 +2,9 @@ using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _screenController;
-    [SerializeField]
-    private GameObject _player;
-    [SerializeField]
-    private GameObject _playerModel;
+    [SerializeField] private GameObject _screenController;
+    [SerializeField] private GameObject _player;
+    [SerializeField] private GameObject _playerModel;
 
     private Movement _playerMovement;
     private Animator _playerAnimator;
@@ -19,7 +16,7 @@ public class Collision : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        _playerMovement.enabled = false; // stop player from moving.
+        _playerMovement.enabled = false; // stop _player from moving.
         _playerAnimator.Play("Stumble Backwards"); // play stumble animation.
         _screenController.GetComponent<ShowEndScreen>().enabled = true; // show end screen.
     }
