@@ -7,6 +7,14 @@ TagManager:
   - Section
   - Coin
   - Obstacle
+  - Tree
+  - TreeStump
+  - SmallRocks
+  - Tree2
+  - Tree3
+  - Tree4
+  - Rock
+  - House
   layers:
   - Default
   - TransparentFX
