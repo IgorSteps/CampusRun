@@ -3,7 +3,7 @@ using UnityEditor.PackageManager;
 using UnityEngine;
 
 /// <summary>
-/// PoolManager is a singelton that handles the creation, storage, retrieval, and recycling of section objects.
+/// PoolManager is a singleton that handles the creation, storage, retrieval, and recycling of game objects.
 /// </summary>
 public class PoolManager : MonoBehaviour
 {

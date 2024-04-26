@@ -16,8 +16,6 @@ public class Collision : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("called in Collision");
-
         _playerMovement.enabled = false; // stop _player from moving.
         _playerAnimator.Play("Stumble Backwards"); // play stumble animation.
         _screenController.GetComponent<ShowEndScreen>().enabled = true; // show end screen.
