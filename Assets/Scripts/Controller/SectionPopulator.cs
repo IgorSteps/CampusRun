@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 /// <summary>
-/// SectionPopulator is handless procedural content generation for each section.
+/// SectionPopulator handles procedural content generation for each section.
 /// </summary>
 public class SectionPopulator : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class SectionPopulator : MonoBehaviour
     {
         // Populate the section.
         PopulateLanes();
-        //PopulateScenery();
+        PopulateScenery();
     }
 
     /// <summary>
