@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4622567573717952481}
   - component: {fileID: 3401068866725207161}
   - component: {fileID: 3196892625714058018}
+  - component: {fileID: 3498528105977595543}
   m_Layer: 0
   m_Name: Crate
   m_TagString: Obstacle
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6447238721999038100}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.0397115, y: 0, z: -19.95705}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -99,10 +100,25 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 8dca5595cdaced544b3bca78ca84e8d8, type: 3}
+--- !u!114 &3498528105977595543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6447238721999038100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 573c92c5e27991b45befe19b04208e9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _screenController: {fileID: 0}
+  _player: {fileID: 0}
+  _playerModel: {fileID: 0}
