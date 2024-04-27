@@ -18,7 +18,7 @@ public class LevelController : MonoBehaviour
     // Distance behind the player where sections can be recycled.
     [SerializeField] private float _safeZone = 50.0f;
     // List of active sections.
-    private List<GameObject> activeSections = new List<GameObject>();
+    private readonly List<GameObject> activeSections = new List<GameObject>();
 
     /// <summary>
     /// Start initially populates the world with a number of sections.
@@ -28,7 +28,7 @@ public class LevelController : MonoBehaviour
         for (int i = 0; i < _numSectionsOnScreen; i++)
         {
             SpawnSection();
-        }    
+        }
     }
 
     /// <summary>

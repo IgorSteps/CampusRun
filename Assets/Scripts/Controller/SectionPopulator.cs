@@ -2,38 +2,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// SectionPopulator is handless procedural content generation for each section.
+/// </summary>
 public class SectionPopulator : MonoBehaviour
 {
-    [SerializeField] private int _numOfCoinsInColumn = 15;
-
-    [SerializeField] private int maxTreesPerSection = 50;
-    [SerializeField] private float minTreeSpacing = 5f;
-
-    private HashSet<Vector3> _occupiedPositions;
+    // Coins/Obstacles:
+    [SerializeField] private int _numOfThingsInLane = 15;
+    // Scenery:
+    [SerializeField] private int _treesPerSection = 20;
+    [SerializeField] private int _rockPerSection = 10;
+    [SerializeField] private int _smallRockPerSection = 10;
+    [SerializeField] private int _treeStumpsPerSection = 10;
+    // To keep track of occupied positions by scenery objects.
+    private readonly HashSet<Vector3> _occupiedPositions = new HashSet<Vector3>();
 
     private void OnEnable()
     {
-        _occupiedPositions = new HashSet<Vector3>();
-        Populate();
-        PopulateScenery();
+        // Populate the section.
+        PopulateLanes();
+        //PopulateScenery();
     }
 
-    private void Populate()
+    /// <summary>
+    /// PopulateLanes procedurally generates coins and obstacles in each lane for the section.
+    /// </summary>
+    private void PopulateLanes()
     {
-        // This places the first thing at the center of the right-most row
-        Vector3 startPosition = new(6.0f, 1.5f, 0.0f);
-        // Randomly select one column to be free of obstacles
-        int freeColumn = Random.Range(0, 3);
+        // This places the first coin/obstacle at the center of the right-most row.
+        Vector3 startPosition = new(6.0f, 1.0f, 0.0f);
 
-        for (int column = 0; column < 3; column++)
+        // Randomly select one lane to be free of obstacles.
+        int freeLane = Random.Range(0, 3);
+
+        for (int lane = 0; lane < 3; lane++)
         {
-            // Because the ground is 9, by subtracting 3 from each
+            // Because the player's ground area is 9 units wide, we place each coin at its own lane by
+            // subtracting 3 from each.
             startPosition.x -= 3;
-            for (int row = 0; row < _numOfCoinsInColumn; row++)
+            for (int row = 0; row < _numOfThingsInLane; row++)
             {
-                if (column == freeColumn)
+                if (lane == freeLane)
                 {
-                    // Place only coins in the free column
+                    // Place only coins in the free lane
                     PlaceCoin(startPosition.x, startPosition.y, startPosition.z + row);
                 }
                 else
@@ -45,10 +56,44 @@ public class SectionPopulator : MonoBehaviour
                     }
                     else
                     {
-                        PlaceObstacle(startPosition.x, startPosition.y, startPosition.z + row);
+                        // TODO: Move the offset to a separate variable?
+                        PlaceObstacle(startPosition.x, startPosition.y - 0.2f, startPosition.z + row);
                     }
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// PopulateScenery procedurally generates scenery for the section.
+    /// </summary>
+    private void PopulateScenery()
+    {
+        for (int i = 0; i < _treesPerSection; i++)
+        {
+            Vector3 position = GenerateUnoccupiedPosition();
+            
+            // TODO: Should the tree type be an enum?
+            int treeType = Random.Range(1, 4);
+            PlaceTree(treeType, position);
+        }
+
+        for (int i = 0; i < _smallRockPerSection; i++)
+        {
+            Vector3 position = GenerateUnoccupiedPosition();
+            PlaceSmallRocks(position);
+        }
+
+        for (int i = 0; i < _treeStumpsPerSection; i++)
+        {
+            Vector3 position = GenerateUnoccupiedPosition();
+            PlaceTreeStump(position);
+        }
+
+        for (int i = 0; i < _rockPerSection; i++)
+        {
+            Vector3 position = GenerateUnoccupiedPosition();
+            PlaceRock(position);
         }
     }
 
@@ -72,44 +117,10 @@ public class SectionPopulator : MonoBehaviour
         }
     }
 
-    private void PopulateScenery()
+    private void PlaceTree(int treeType, Vector3 pos)
     {
-        for (int i = 0; i < 20; i++)
-        {
-            Vector3 position = GenerateUnoccupiedPosition();
-            int treeNum = Random.Range(1, 4);
-            PlaceTree(treeNum, position);
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            Vector3 position = GenerateUnoccupiedPosition();
-            PlaceSmallRocks(position);
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            Vector3 position = GenerateUnoccupiedPosition();
-            PlaceTreeStump(position);
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            Vector3 position = GenerateUnoccupiedPosition();
-            PlaceRock(position);
-        }
-
-        // TODO: Should there be houses in the first place?
-        //for (int i=0; i<2; i++)
-        //{
-        //    Vector3 position = GenerateUnoccupiedPosition();
-        //    PlaceHouse(position);
-        //}
-    }
-
-    private void PlaceTree(int treeNum, Vector3 pos)
-    {
-        string treePoolName = string.Format("Tree"+treeNum);
+        // Build the name of the tree pool name, in the format TreeNumber.
+        string treePoolName = string.Format("Tree"+treeType);
         GameObject tree = PoolManager.s_Instance.GetObject(treePoolName);
         if (tree != null)
         {
@@ -127,19 +138,6 @@ public class SectionPopulator : MonoBehaviour
             rock.transform.position = pos;
             rock.transform.SetParent(this.transform, false);
         }
-
-    }
-
-    private void PlaceHouse(Vector3 pos)
-    {
-        GameObject house = PoolManager.s_Instance.GetObject("House");
-        if (house != null)
-        {
-            house.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-            house.transform.position = pos;
-            house.transform.SetParent(this.transform, false);
-        }
-
     }
 
     private void PlaceSmallRocks(Vector3 pos)
@@ -163,33 +161,33 @@ public class SectionPopulator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// GenerateXPosition generates x-position for scenery objects outside the player's area.
+    /// </summary>
     private float GenerateXPosition()
     {
-        // Player area extends from -4.5 to 4.5 along the x-axis
-        float playerAreaStart = -4.5f;
-        float playerAreaEnd = 4.5f;
-
-        // Randomly decide to place on the left or right side of the player area
+        // Randomly choose where to place(left or right side of the player area).
         bool placeOnLeft = Random.value > 0.5f;
-
         if (placeOnLeft)
         {
-            return Random.Range(-18f, playerAreaStart);  // Left side, outside player area
+            return Random.Range(Constants.SECTION_AREA_END, Constants.PLAYER_AREA_END);  // Left side, outside player area
         }
         else
         {
-            return Random.Range(playerAreaEnd, 18f);  // Right side, outside player area
+            return Random.Range(Constants.PLAYER_AREA_START, Constants.SECTION_AREA_START);  // Right side, outside player area
         }
     }
 
+    /// <summary>
+    /// GenerateUnoccupiedPosition generates an unoccupied position for the scenery object.
+    /// </summary>
     private Vector3 GenerateUnoccupiedPosition()
     {
         Vector3 potentialPosition;
-        do
-        {
+        do {
             float xPos = GenerateXPosition();
             float yPos = 0f;
-            float zPos = Random.Range(0.0f, 30.0f);
+            float zPos = Random.Range(0.0f, Constants.SECTION_LENGTH);
             potentialPosition = new Vector3(xPos, yPos, zPos);
         } while (_occupiedPositions.Contains(potentialPosition));
 
@@ -197,57 +195,53 @@ public class SectionPopulator : MonoBehaviour
         return potentialPosition;
     }
 
+    /// <summary>
+    /// OnDisable recycles game objects and clears the occupied positions set.
+    /// </summary>
     void OnDisable()
     {
-        // Return all child obstacles to the pool
+        // Recycle objects. 
         foreach (Transform child in transform)
         {
-            if (transform.CompareTag("Coin"))
+            switch(transform.tag)
             {
-                PoolManager.s_Instance.ReturnObject(child.gameObject, "Coin");
+                case "Coin":
+                    PoolManager.s_Instance.ReturnObject(child.gameObject, "Coin");
+                    break;
+                case "Obstacle":
+                    PoolManager.s_Instance.ReturnObject(child.gameObject, "Obstacle");
+                    break;
+                case "Tree":
+                    PoolManager.s_Instance.ReturnObject(child.gameObject, "Tree");
+                    break;
+                case "Tree2":
+                    PoolManager.s_Instance.ReturnObject(child.gameObject, "Tree2");
+                    break;
+                case "Tree3":
+                    PoolManager.s_Instance.ReturnObject(child.gameObject, "Tree3");
+                    break;
+                case "Tree4":
+                    PoolManager.s_Instance.ReturnObject(child.gameObject, "Tree4");
+                    break;
+                case "SmallRocks":
+                    PoolManager.s_Instance.ReturnObject(child.gameObject, "SmallRocks");
+                    break;
+                case "TreeStump":
+                    PoolManager.s_Instance.ReturnObject(child.gameObject, "TreeStump");
+                    break;
+                case "Rock":
+                    PoolManager.s_Instance.ReturnObject(child.gameObject, "Rock");
+                    break;
+                case "Section":
+                    // Sections are recycled in the level controller.
+                    break;
+                default:
+                    Debug.LogWarning("Cannot recycle '" + transform.tag + "', I don't know it");
+                    break;
             }
-
-            if (transform.CompareTag("Obstacle"))
-            {
-                PoolManager.s_Instance.ReturnObject(child.gameObject, "Obstacle");
-            }
-
-            if (transform.CompareTag("Tree"))
-            {
-                PoolManager.s_Instance.ReturnObject(child.gameObject, "Tree");
-            }
-
-            if (transform.CompareTag("Tree2"))
-            {
-                PoolManager.s_Instance.ReturnObject(child.gameObject, "Tree2");
-            }
-
-            if (transform.CompareTag("Tree3"))
-            {
-                PoolManager.s_Instance.ReturnObject(child.gameObject, "Tree3");
-            }
-
-            if (transform.CompareTag("Tree4"))
-            {
-                PoolManager.s_Instance.ReturnObject(child.gameObject, "Tree4");
-            }
-
-            if (transform.CompareTag("SmallRocks"))
-            {
-                PoolManager.s_Instance.ReturnObject(child.gameObject, "SmallRocks");
-            }
-
-            if (transform.CompareTag("TreeStump"))
-            {
-                PoolManager.s_Instance.ReturnObject(child.gameObject, "TreeStump");
-            }
-
-            if (transform.CompareTag("House"))
-            {
-                PoolManager.s_Instance.ReturnObject(child.gameObject, "House");
-            }
-
-            _occupiedPositions.Clear();
         }
+
+        // Clear the occupied positions.
+        _occupiedPositions.Clear();
     }
 }

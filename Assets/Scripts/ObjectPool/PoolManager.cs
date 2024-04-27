@@ -32,6 +32,11 @@ public class PoolManager : MonoBehaviour
             for (int i = 0; i < pool.poolSize; i++)
             {
                 GameObject obj = Instantiate(pool.prefab);
+
+                // The "Section" prefab is already disabled in the editor to ensure it's instantiated in the Disabled state and
+                // doesn't trigger procedural content generation that runs whever a "Section" is actived.
+                // The rest of the objects, however, need to be disabled here.
+                // TODO: Find a way to make this more intuitive...
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
@@ -61,7 +66,7 @@ public class PoolManager : MonoBehaviour
         }
         else
         {
-            // TODO: Dynamically create extra objects if necessary.
+            // TODO: Dynamically create extra objects.
             Debug.LogWarning("All objects in the '" + name + "' pool are in use.");
             return null;
         }

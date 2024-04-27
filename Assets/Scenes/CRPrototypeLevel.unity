@@ -299,16 +299,16 @@ MonoBehaviour:
     poolSize: 300
   - name: Tree1
     prefab: {fileID: 1608096764148392, guid: e8cba87a38597cb438f18dd353355c01, type: 3}
-    poolSize: 50
+    poolSize: 100
   - name: Tree2
     prefab: {fileID: 1407229615668976, guid: 195bfeab1fd63da4892ce170203d890e, type: 3}
-    poolSize: 50
+    poolSize: 100
   - name: Tree3
     prefab: {fileID: 1046268137424332, guid: ca6c65d983fe82c4abd9c162ce47d5a6, type: 3}
-    poolSize: 50
+    poolSize: 100
   - name: Tree4
     prefab: {fileID: 1554581858039714, guid: d0e825257ded2eb4fafb2d235e4f0fe8, type: 3}
-    poolSize: 50
+    poolSize: 100
   - name: SmallRocks
     prefab: {fileID: 1398337415367500, guid: b8b2bd1a454b5054898a483ad8dde53f, type: 3}
     poolSize: 200
@@ -318,9 +318,6 @@ MonoBehaviour:
   - name: Rock
     prefab: {fileID: 1265567056653560, guid: c99ae13a9e3a8914cb16b4c26bf0d5f2, type: 3}
     poolSize: 200
-  - name: House
-    prefab: {fileID: 1310734645493494, guid: 85306d46a2fa86147ae3d969682b0835, type: 3}
-    poolSize: 10
 --- !u!114 &303009128
 MonoBehaviour:
   m_ObjectHideFlags: 0

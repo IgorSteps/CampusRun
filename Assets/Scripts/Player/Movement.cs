@@ -3,10 +3,10 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private float _frontSpeed = Constants.DEFAULT_FORWARD_SPEED;
-    [SerializeField] private float _sideSpeed = Constants.DEFAULT_SIDE_SPEED;
+    [SerializeField] private float _frontSpeed = Constants.DEFAULT_PLAYER_FORWARD_SPEED;
+    [SerializeField] private float _sideSpeed = Constants.DEFAULT_PLAYER_SIDE_SPEED;
     private int _currentLane = 1; // 0 = Left, 1 = Middle, 2 = Right
-    private float[] _lanePositions = { -3f, 0f, 3f };
+    private readonly float[] _lanePositions = { -3f, 0f, 3f };
 
     public GameObject _playerModel;
     private Animator _playerAnimator;
@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
         // Side movement.
         Vector3 newPosition = transform.position;
         // Smooth transition to lane position
-        newPosition.x = Mathf.Lerp(newPosition.x, _lanePositions[_currentLane], Time.deltaTime * 4); 
+        newPosition.x = Mathf.Lerp(newPosition.x, _lanePositions[_currentLane], Time.deltaTime * _sideSpeed); 
         transform.position = newPosition;
     }
 
