@@ -1,23 +1,25 @@
 using UnityEngine;
 
+/// <summary>
+/// Collision handels collision response with obstacles.
+/// </summary>
 public class Collision : MonoBehaviour
 {
-    [SerializeField] private GameObject _screenController;
-    [SerializeField] private GameObject _player;
-    [SerializeField] private GameObject _playerModel;
-
+    private ShowEndScreen _endScreen;
     private Movement _playerMovement;
     private Animator _playerAnimator;
 
     public void Start()
     {
-        _playerMovement = _player.GetComponent<Movement>();
-        _playerAnimator = _playerModel.GetComponent<Animator>();
+        _endScreen = GameObject.Find("Screen").GetComponent<ShowEndScreen>();
+        _playerMovement = GameObject.Find("Player").GetComponent<Movement>();
+        _playerAnimator = GameObject.Find("Aj@Running").GetComponent<Animator>();
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        _playerMovement.enabled = false; // stop _player from moving.
+        _playerMovement.enabled = false; // stop Player from moving.
         _playerAnimator.Play("Stumble Backwards"); // play stumble animation.
-        _screenController.GetComponent<ShowEndScreen>().enabled = true; // show end screen.
+        _endScreen.enabled = true; // show end screen.
     }
 }
