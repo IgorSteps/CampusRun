@@ -36,7 +36,7 @@ public class LanePopulator : MonoBehaviour
             // Generate a noise value for coin and floor it to the range of lane indices (0, 1, 2).
             float coinNoiseValue = Mathf.PerlinNoise(_coinPerlinOffset, currentZ * _coinPerlinScale);
             int counLaneIdx = Mathf.FloorToInt(coinNoiseValue * 3);
-            // Calculate the x position based on the lane index, where right-most lane is at startPosition.x.
+            // Calculate the x position based on the lane index, where right-most lane is at _startPosition.x.
             float coinLaneX = startPosition.x - counLaneIdx * 3.0f;
 
             // Place the coin.

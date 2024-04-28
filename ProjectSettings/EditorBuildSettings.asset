@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CRPrototypeLevel.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/CREndMenu.unity
+    guid: 3cdb6bc644cc6d0498b7b423f1f26007
   m_configObjects: {}

@@ -12,7 +12,7 @@ public class CoinCollection : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         _coinCollectSound.Play();
-        ScoreController.s_Score += 1;
+        ScoreController.s_CoinScore += 1;
         PoolManager.s_Instance.ReturnObject(gameObject, "Coin");
     }
 }

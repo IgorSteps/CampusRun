@@ -2,10 +2,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// ShowEndScree handles showing the End Menu scene.
+/// </summary>
 public class ShowEndScreen : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _endScreen;
     void Start()
     {
         StartCoroutine(Ending());
@@ -13,8 +14,7 @@ public class ShowEndScreen : MonoBehaviour
 
     IEnumerator Ending()
     {
-        _endScreen.SetActive(true);
         yield return new WaitForSeconds(4);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2);
     }
 }
