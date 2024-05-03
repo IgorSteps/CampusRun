@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 
 /// <summary>
@@ -22,4 +23,7 @@ public class Constants
     // Player speeds.
     public static readonly float DEFAULT_PLAYER_FORWARD_SPEED = 7.0f;
     public static readonly float DEFAULT_PLAYER_SIDE_SPEED = 4.0f;
+
+    public static readonly float DOWNWARD_GRAVITY_FORCE = -10.0f;
+    public static readonly float DEFAULT_JUMP_HEIGHT = 0.5f;
 }

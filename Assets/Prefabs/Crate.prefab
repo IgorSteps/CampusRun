@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3401068866725207161}
   - component: {fileID: 3196892625714058018}
   - component: {fileID: 3498528105977595543}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crate
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573c92c5e27991b45befe19b04208e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _screenController: {fileID: 0}
   _player: {fileID: 0}
-  _playerModel: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
