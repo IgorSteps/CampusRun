@@ -34,6 +34,7 @@ public class Movement : MonoBehaviour
     public void OnMove(InputValue value)
     {
         _movementInput = value.Get<Vector2>();
+        Debug.Log("movement y= "+ _movementInput.y);
         int newLane = _currentLane;
         if (_movementInput.x < 0) // Move Left
         {
@@ -45,6 +46,10 @@ public class Movement : MonoBehaviour
         {
             if (newLane < 2)
                 newLane++;
+        } 
+        else if (_movementInput.y > 0) // Jump
+        {
+            _playerAnimator.SetTrigger("OnJump");
         }
 
         // If the lane has changed, trigger the jump animation
