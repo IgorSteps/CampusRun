@@ -8,7 +8,9 @@ public class Collision : MonoBehaviour
     private ShowEndScreen _endScreen;
     private Movement _playerMovement;
     private Animator _playerAnimator;
+    public LayerMask groundLayer;
     [SerializeField] private GameObject _player;
+
     public void Start()
     {
         _endScreen = GameObject.Find("Screen").GetComponent<ShowEndScreen>();
@@ -20,6 +22,7 @@ public class Collision : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         float heigthDiff = other.transform.position.y - this.gameObject.transform.position.y;
+        // Run on top of the obstacle.
         if (heigthDiff > 1.5f)
         {
              UpdateYPositionOnGround();
@@ -32,28 +35,13 @@ public class Collision : MonoBehaviour
         }
     }
 
-    public LayerMask groundLayer;
 
-    void UpdateYPositionOnGround()
+    private void UpdateYPositionOnGround()
     {
         _player.transform.position = new Vector3(
             _player.transform.position.x,
             this.gameObject.transform.position.y + 4.0f,
             _player.transform.position.z
             );
-        Debug.Log("On top of the obstacle, y pos is " + _player.transform.position.y);
     }
-
-    //void CheckForSideCollisions()
-    //{
-    //    RaycastHit hit;
-    //    // Raycast forward to detect obstacles in the direction of movement
-    //    if (Physics.Raycast(transform.position, Vector3.forward, out hit, 1.0f, groundLayer)) // 1f is the lookahead distance, adjust as necessary
-    //    {
-    //        if (hit.collider.CompareTag("Obstacle"))
-    //        {
-    //            Debug.Log("Dead");
-    //        }
-    //    }
-    //}
 }
