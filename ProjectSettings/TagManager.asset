@@ -16,6 +16,7 @@ TagManager:
   - Rock
   - House
   - Skip
+  - Column
   layers:
   - Default
   - TransparentFX

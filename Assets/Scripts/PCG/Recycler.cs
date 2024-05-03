@@ -20,6 +20,9 @@ public class Recycler : MonoBehaviour
                 case "Obstacle":
                     PoolManager.s_Instance.ReturnObject(child.gameObject, "Obstacle");
                     break;
+                case "Column":
+                    PoolManager.s_Instance.ReturnObject(child.gameObject, "Column");
+                    break;
                 case "Tree":
                     PoolManager.s_Instance.ReturnObject(child.gameObject, "Tree1");
                     break;

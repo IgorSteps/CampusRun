@@ -318,6 +318,9 @@ MonoBehaviour:
   - name: Rock
     prefab: {fileID: 1265567056653560, guid: c99ae13a9e3a8914cb16b4c26bf0d5f2, type: 3}
     poolSize: 200
+  - name: Column
+    prefab: {fileID: 6042385119247624003, guid: 0259ce7aaac8f0c4ca62c5538522b5d7, type: 3}
+    poolSize: 300
 --- !u!114 &303009128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1106,14 +1109,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0c5fc3f42841b4f831a20e01c072fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   _frontSpeed: 5
   _sideSpeed: 4
   _upSpeed: 0
   _characterController: {fileID: 1150559823}
   _playerModel: {fileID: 362129045}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!143 &1150559823
 CharacterController:
   m_ObjectHideFlags: 0
