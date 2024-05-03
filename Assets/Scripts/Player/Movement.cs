@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 
 public class Movement : MonoBehaviour
 {
+    public LayerMask groundLayer;
     [SerializeField] private float _frontSpeed = Constants.DEFAULT_PLAYER_FORWARD_SPEED;
     [SerializeField] private float _sideSpeed = Constants.DEFAULT_PLAYER_SIDE_SPEED;
     [SerializeField] private float _upSpeed;
@@ -16,11 +17,10 @@ public class Movement : MonoBehaviour
     private int _currentLane = 1; // 0 = Left, 1 = Middle, 2 = Right
     private readonly float[] _lanePositions = { -3f, 0f, 3f };
     private Vector2 _movementInput;
-    private float jumpHeight = 0.5f;
-    private float _gravity = -10f;
+    private float jumpHeight = Constants.DEFAULT_JUMP_HEIGHT;
+    private float _gravity = Constants.DOWNWARD_GRAVITY_FORCE;
     private bool _isGrounded;
 
-    public LayerMask groundLayer;
 
     void Start()
     {
