@@ -296,7 +296,7 @@ MonoBehaviour:
     poolSize: 500
   - name: Obstacle
     prefab: {fileID: 6447238721999038100, guid: 9480f54e236a85343a7ecc7b5650c840, type: 3}
-    poolSize: 100
+    poolSize: 200
   - name: Tree1
     prefab: {fileID: 1608096764148392, guid: e8cba87a38597cb438f18dd353355c01, type: 3}
     poolSize: 100
@@ -1024,7 +1024,7 @@ GameObject:
   - component: {fileID: 1150559824}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
