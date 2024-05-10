@@ -11,19 +11,23 @@ public class LanePopulator : MonoBehaviour
     private float _coinPerlinScale = 0.1f;
     private float _cratePerlinScale = 0.1f;
     private float _columnPerlinScale = 0.1f;
+    private float _carPerlinScale = 0.1f;
     // Noise offsets for coin and obstacle.
     private float _coinPerlinOffset;
     private float _cratePerlinOffset;
     private float _columnPerlinOffset;
+    private float _carPerlinOffset;
     // Threshold controls obstacle density. Lower means more obstacles. Higher means decreased frequency.
     private float _cratePlacementThreshold = 0.6f;
     private float _columnPlacementThreshold = 0.7f;
+    private float _carPlacementThreshold = 0.7f;
 
     private void OnEnable()
     {
         _coinPerlinOffset = Random.Range(0f, 10000f);
         _cratePerlinOffset = Random.Range(0f, 10000f);
         _columnPerlinOffset = Random.Range(0f, 10000f);
+        _carPerlinOffset = Random.Range(0f, 10000f);
         Populate();
     }
 
@@ -43,12 +47,11 @@ public class LanePopulator : MonoBehaviour
             // Calculate the x position based on the lane index, where right-most lane is at _startPosition.x.
             float coinLaneX = startPosition.x - counLaneIdx * 3.0f;
 
-            // Place the coin.
             PlaceCoin(coinLaneX, startPosition.y, startPosition.z + currentZ);
             // Set the flag that this lane is now filled.
             laneFilled[counLaneIdx] = true;
 
-            // Place crates in other free lanes.
+            // Place crates.
             for (int lane = 0; lane < 3; lane++)
             {
                 if (!laneFilled[lane])
@@ -59,20 +62,37 @@ public class LanePopulator : MonoBehaviour
                     if (obstacleNoiseValue > _cratePlacementThreshold)
                     {
                         PlaceCrate(obstacleLaneX, startPosition.y - 0.30f, startPosition.z + currentZ);
+                        laneFilled[lane] = true;
                     }
                 }
             }
 
-            // Place cars in other free lanes.
+            // Place columns.
             for (int lane = 0; lane < 3; lane++)
             {
                 if (!laneFilled[lane])
                 {
-                    float secondObstacleNoiseValue = Mathf.PerlinNoise(_columnPerlinOffset, currentZ * _columnPerlinScale + lane);
-                    if (secondObstacleNoiseValue > _columnPlacementThreshold)
+                    float columnNoise = Mathf.PerlinNoise(_columnPerlinOffset, currentZ * _columnPerlinScale + lane);
+                    if (columnNoise > _columnPlacementThreshold)
                     {
-                        float secondObstacleLaneX = startPosition.x - lane * 3.0f;
-                        PlaceColumn(secondObstacleLaneX, startPosition.y + 1.70f, startPosition.z + currentZ);
+                        float columnX = startPosition.x - lane * 3.0f;
+                        PlaceColumn(columnX, startPosition.y + 1.70f, startPosition.z + currentZ);
+                        laneFilled[lane] = true;
+                    }
+                }
+            }
+
+            // Place cars.
+            for (int lane = 0; lane < 3; lane++)
+            {
+                if (!laneFilled[lane])
+                {
+                    float carObstacleValue = Mathf.PerlinNoise(_carPerlinOffset, currentZ * _carPerlinScale + lane);
+                    if (carObstacleValue > _carPlacementThreshold)
+                    {
+                        float carX = startPosition.x - lane * 3.0f;
+                        PlaceCar(carX, startPosition.y - 0.9f, startPosition.z + currentZ);
+                        currentZ += 8.0f;
                     }
                 }
             }
@@ -109,6 +129,16 @@ public class LanePopulator : MonoBehaviour
         {
             column.transform.position = new Vector3(xPos, yPos, zPos);
             column.transform.SetParent(this.transform, false);
+        }
+    }
+
+    private void PlaceCar(float xPos, float yPos, float zPos)
+    {
+        GameObject car = PoolManager.s_Instance.GetObject("Car");
+        if (car != null)
+        {
+            car.transform.position = new Vector3(xPos, yPos, zPos);
+            car.transform.SetParent(this.transform, false);
         }
     }
 }
