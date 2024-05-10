@@ -7,7 +7,6 @@ TagManager:
   - Section
   - Coin
   - Obstacle
-  - Tree
   - TreeStump
   - SmallRocks
   - Tree2
@@ -19,6 +18,16 @@ TagManager:
   - Column
   - Car
   - FracturedCrate
+  - Tree1
+  - Tree
+  - Tile
+  - Mountain
+  - Ground
+  - LeftGround
+  - RightGround
+  - LeftTile
+  - MiddleTile
+  - RightTile
   layers:
   - Default
   - TransparentFX

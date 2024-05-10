@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// LevelController manages the spawning and recycling level sections.
@@ -47,14 +48,57 @@ public class LevelController : MonoBehaviour
     private void SpawnSection()
     {
         GameObject section = PoolManager.s_Instance.GetObject("Section");
-        section.transform.position = Vector3.forward * _spawnZ;
+        section.transform.position = new Vector3(0, 0, _spawnZ);
+        SetupSection(section);
         _spawnZ += _sectionLength;
         activeSections.Add(section);
+    }
+
+    private void SetupSection(GameObject section)
+    {
+        GameObject leftGround = PoolManager.s_Instance.GetObject("LeftGround");
+        leftGround.transform.position = new Vector3(-12.05f, -0.092f, _spawnZ);
+        leftGround.transform.SetParent(section.transform);
+
+        GameObject rightGround = PoolManager.s_Instance.GetObject("RightGround");
+        rightGround.transform.position = new Vector3(12.05f, -0.092f, _spawnZ);
+        rightGround.transform.SetParent(section.transform);
+
+        GameObject leftTile = PoolManager.s_Instance.GetObject("LeftTile");
+        leftTile.transform.position = new Vector3(-4.27f, 0.18455f, _spawnZ);
+        leftTile.transform.SetParent(section.transform);
+
+        GameObject middleTile = PoolManager.s_Instance.GetObject("MiddleTile");
+        middleTile.transform.position = new Vector3(-1.37f, 0.18455f, _spawnZ);
+        middleTile.transform.SetParent(section.transform);
+
+        GameObject rightTile = PoolManager.s_Instance.GetObject("RightTile");
+        rightTile.transform.position = new Vector3(1.53f, 0.18455f, _spawnZ);
+        rightTile.transform.SetParent(section.transform);
     }
 
     private void RecycleSection()
     {
         GameObject section = activeSections[0];
+        // Collect all children to be recycled into a list
+        List<GameObject> childrenToRecycle = new List<GameObject>();
+        foreach (Transform child in section.transform)
+        {
+            childrenToRecycle.Add(child.gameObject);
+        }
+
+        // Recycle all collected children
+        foreach (GameObject child in childrenToRecycle)
+        {
+            child.transform.SetParent(null);
+            PoolManager.s_Instance.ReturnObject(child, child.tag);
+        }
+        // Check if all children are recycled
+        if (section.transform.childCount > 0)
+        {
+            Debug.LogError("Failed to recycle all children, there are '" + section.transform.childCount + "' children left.");
+        }
+
         activeSections.RemoveAt(0);
         PoolManager.s_Instance.ReturnObject(section, "Section");
     }

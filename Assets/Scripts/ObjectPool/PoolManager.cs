@@ -86,4 +86,21 @@ public class PoolManager : MonoBehaviour
         obj.SetActive(false);
         _poolDictionary[name].Enqueue(obj);
     }
+
+    //public void ResetObject(GameObject obj)
+    //{
+    //    // Reset position, rotation, and any other necessary properties
+    //    obj.transform.position = Vector3.zero;
+    //    obj.transform.rotation = Quaternion.identity;
+    //    obj.transform.localScale = Vector3.one;
+
+    //    // Additional resets depending on the component types involved
+    //    // For example, if your object has a Rigidbody component:
+    //    var rb = obj.GetComponent<Rigidbody>();
+    //    if (rb != null)
+    //    {
+    //        rb.velocity = Vector3.zero;
+    //        rb.angularVelocity = Vector3.zero;
+    //    }
+    //}
 }

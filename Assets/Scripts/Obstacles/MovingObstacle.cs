@@ -63,7 +63,7 @@ public class MovingObstacle : MonoBehaviour
             StartCoroutine(Shrink(t, 2));
         }
 
-        // Delay the recycle to give the time for animation to complete.
+        // Delay the recycle to give the time for animation to finish.
         StartCoroutine(Recycle(fracturedCrate, 5));
     }
 

@@ -21,7 +21,6 @@ public class Movement : MonoBehaviour
     private float _gravity = Constants.DOWNWARD_GRAVITY_FORCE;
     private bool _isGrounded;
 
-
     void Start()
     {
         _playerAnimator = _playerModel.GetComponent<Animator>();
