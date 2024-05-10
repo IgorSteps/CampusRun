@@ -22,6 +22,11 @@ public class LanePopulator : MonoBehaviour
     private float _columnPlacementThreshold = 0.7f;
     private float _carPlacementThreshold = 0.7f;
 
+    private const float _laneWidth = 3.0f;
+    private const float _carYOffset = 0.9f;
+    private const float _minCarSpacing = 6.0f;
+    private const float _maxCarSpacing = 10.0f;
+
     private void OnEnable()
     {
         _coinPerlinOffset = Random.Range(0f, 10000f);
@@ -43,9 +48,9 @@ public class LanePopulator : MonoBehaviour
 
             // Generate a noise value for coin and floor it to the range of lane indices (0, 1, 2).
             float coinNoiseValue = Mathf.PerlinNoise(_coinPerlinOffset, currentZ * _coinPerlinScale);
-            int counLaneIdx = Mathf.FloorToInt(coinNoiseValue * 3);
+            int counLaneIdx = Mathf.FloorToInt(coinNoiseValue * _laneWidth);
             // Calculate the x position based on the lane index, where right-most lane is at _startPosition.x.
-            float coinLaneX = startPosition.x - counLaneIdx * 3.0f;
+            float coinLaneX = startPosition.x - counLaneIdx * _laneWidth;
 
             PlaceCoin(coinLaneX, startPosition.y, startPosition.z + currentZ);
             // Set the flag that this lane is now filled.
@@ -58,7 +63,7 @@ public class LanePopulator : MonoBehaviour
                 {
                     // Offset by lane index for diversity.
                     float obstacleNoiseValue = Mathf.PerlinNoise(_cratePerlinOffset, currentZ * _cratePerlinScale + lane);
-                    float obstacleLaneX = startPosition.x - lane * 3.0f;
+                    float obstacleLaneX = startPosition.x - lane * _laneWidth;
                     if (obstacleNoiseValue > _cratePlacementThreshold)
                     {
                         PlaceCrate(obstacleLaneX, startPosition.y - 0.30f, startPosition.z + currentZ);
@@ -90,9 +95,10 @@ public class LanePopulator : MonoBehaviour
                     float carObstacleValue = Mathf.PerlinNoise(_carPerlinOffset, currentZ * _carPerlinScale + lane);
                     if (carObstacleValue > _carPlacementThreshold)
                     {
-                        float carX = startPosition.x - lane * 3.0f;
-                        PlaceCar(carX, startPosition.y - 0.9f, startPosition.z + currentZ);
-                        currentZ += 8.0f;
+                        float carX = startPosition.x - lane * _laneWidth;
+                        PlaceCar(carX, startPosition.y - _carYOffset, startPosition.z + currentZ);
+                        float carSpacing = UnityEngine.Random.Range(_minCarSpacing, _maxCarSpacing);
+                        currentZ += carSpacing;
                     }
                 }
             }
