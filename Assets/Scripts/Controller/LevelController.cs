@@ -65,15 +65,15 @@ public class LevelController : MonoBehaviour
         rightGround.transform.SetParent(section.transform);
 
         GameObject leftTile = PoolManager.s_Instance.GetObject("LeftTile");
-        leftTile.transform.position = new Vector3(-4.27f, 0.18455f, _spawnZ);
+        leftTile.transform.position = new Vector3(-4.27f, 0.18455f, _spawnZ -18);
         leftTile.transform.SetParent(section.transform);
 
         GameObject middleTile = PoolManager.s_Instance.GetObject("MiddleTile");
-        middleTile.transform.position = new Vector3(-1.37f, 0.18455f, _spawnZ);
+        middleTile.transform.position = new Vector3(-1.37f, 0.18455f, _spawnZ - 18);
         middleTile.transform.SetParent(section.transform);
 
         GameObject rightTile = PoolManager.s_Instance.GetObject("RightTile");
-        rightTile.transform.position = new Vector3(1.53f, 0.18455f, _spawnZ);
+        rightTile.transform.position = new Vector3(1.53f, 0.18455f, _spawnZ - 18);
         rightTile.transform.SetParent(section.transform);
     }
 
