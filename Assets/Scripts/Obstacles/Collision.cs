@@ -8,14 +8,12 @@ public class Collision : MonoBehaviour
     private ShowEndScreen _endScreen;
     private Movement _playerMovement;
     private Animator _playerAnimator;
-    private GameObject _player;
 
     public void Start()
     {
         _endScreen = GameObject.Find("Screen").GetComponent<ShowEndScreen>();
         _playerMovement = GameObject.Find("Player").GetComponent<Movement>();
         _playerAnimator = GameObject.Find("Aj@Running").GetComponent<Animator>();
-        _player = GameObject.Find("Player");
     }
 
     private void OnTriggerEnter(Collider other)

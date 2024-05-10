@@ -17,6 +17,7 @@ TagManager:
   - House
   - Skip
   - Column
+  - Car
   layers:
   - Default
   - TransparentFX

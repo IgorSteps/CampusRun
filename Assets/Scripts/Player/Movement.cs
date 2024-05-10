@@ -31,9 +31,9 @@ public class Movement : MonoBehaviour
     {
         _isGrounded = IsGrounded();
         // Clamp to the ground if grounded.
-        if (_isGrounded && _upSpeed < 0)
+        if (_isGrounded && _upSpeed < 0.0f)
         {
-            _upSpeed = 0;
+            _upSpeed = 0.0f;
         }
      
         // Forward movement.
@@ -59,7 +59,7 @@ public class Movement : MonoBehaviour
     {
         Vector3 rayStart = transform.position;
         Vector3 rayDirection = Vector3.down;
-        float rayLength = (_characterController.height * 1.5f) + 0.1f;
+        float rayLength = (_characterController.height * 2.0f) + 0.1f;
 
         // Draw a debug line.
         Debug.DrawRay(rayStart, rayDirection * rayLength, Color.red);
@@ -69,7 +69,7 @@ public class Movement : MonoBehaviour
             transform.position,
             Vector3.down,
             out hit,
-            (_characterController.height*2.0f) + 0.1f,
+            rayLength,
             groundLayer
         ))
         {
