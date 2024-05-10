@@ -31,7 +31,6 @@ public class MovingObstacle : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Car collided with player");
             _playerMovement.enabled = false; // stop Player from moving.
             _playerAnimator.Play("Stumble Backwards"); // play stumble animation.
             _endScreen.enabled = true; // show end screen.
