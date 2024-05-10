@@ -149,7 +149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2de55b2fa9329b84c864a24f0e75c988, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.46022087
+      value: -0.46022093
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2de55b2fa9329b84c864a24f0e75c988, type: 3}
       propertyPath: m_LocalPosition.z
@@ -318,6 +318,15 @@ MonoBehaviour:
   - name: Rock
     prefab: {fileID: 1265567056653560, guid: c99ae13a9e3a8914cb16b4c26bf0d5f2, type: 3}
     poolSize: 200
+  - name: Column
+    prefab: {fileID: 6042385119247624003, guid: 0259ce7aaac8f0c4ca62c5538522b5d7, type: 3}
+    poolSize: 300
+  - name: Car
+    prefab: {fileID: 1098664898953688, guid: f6215ce03e40b3c43a8b1622f794d0ce, type: 3}
+    poolSize: 100
+  - name: FracturedCrate
+    prefab: {fileID: 2471928902266168829, guid: 5ca66cbcc2691004f82ed4c0caea134f, type: 3}
+    poolSize: 100
 --- !u!114 &303009128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,7 +1095,7 @@ Transform:
   m_GameObject: {fileID: 1150559817}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.4672673, z: -13.36}
+  m_LocalPosition: {x: 0, y: 0.9672675, z: -13.36}
   m_LocalScale: {x: 0.9002769, y: 2.8383932, z: 0.9002769}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1106,14 +1115,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0c5fc3f42841b4f831a20e01c072fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   _frontSpeed: 5
   _sideSpeed: 4
   _upSpeed: 0
   _characterController: {fileID: 1150559823}
   _playerModel: {fileID: 362129045}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!143 &1150559823
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1127,7 +1136,7 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
