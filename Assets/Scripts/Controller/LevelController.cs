@@ -12,15 +12,14 @@ public class LevelController : MonoBehaviour
     [SerializeField] private Transform _player;
     // The Z position where the next section should spawn.
     [SerializeField] private float _spawnZ = 0.0f;
-    // Length of the section.
-    [SerializeField] private float _sectionLength = 30.0f;
     // Number of sections active on screen.
     [SerializeField] private int _numSectionsOnScreen = 5;
     // Distance behind the player where sections can be recycled.
     [SerializeField] private float _safeZone = 50.0f;
     // List of active sections.
     private readonly List<GameObject> activeSections = new List<GameObject>();
-
+    private float roadZOffset = 18.0f;
+    
     /// <summary>
     /// Start initially populates the world with a number of sections.
     /// </summary>
@@ -38,7 +37,7 @@ public class LevelController : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (_player.position.z - _safeZone > (_spawnZ - _numSectionsOnScreen * _sectionLength))
+        if (_player.position.z - _safeZone > (_spawnZ - _numSectionsOnScreen * Constants.SECTION_LENGTH))
         {
             SpawnSection();
             RecycleSection();
@@ -50,10 +49,15 @@ public class LevelController : MonoBehaviour
         GameObject section = PoolManager.s_Instance.GetObject("Section");
         section.transform.position = new Vector3(0, 0, _spawnZ);
         SetupSection(section);
-        _spawnZ += _sectionLength;
+        _spawnZ += Constants.SECTION_LENGTH;
         activeSections.Add(section);
     }
 
+    /// <summary>
+    /// Setup the section design, needs to be done here because if these objects just exist on the Section prefab
+    /// they never get recycled/pulled as they don't come from the pool.
+    /// </summary>
+    /// <param name="section"></param>
     private void SetupSection(GameObject section)
     {
         GameObject leftGround = PoolManager.s_Instance.GetObject("LeftGround");
@@ -65,22 +69,24 @@ public class LevelController : MonoBehaviour
         rightGround.transform.SetParent(section.transform);
 
         GameObject leftTile = PoolManager.s_Instance.GetObject("LeftTile");
-        leftTile.transform.position = new Vector3(-4.27f, 0.18455f, _spawnZ -18);
+        leftTile.transform.position = new Vector3(-4.27f, 0.18455f, _spawnZ - roadZOffset);
         leftTile.transform.SetParent(section.transform);
 
         GameObject middleTile = PoolManager.s_Instance.GetObject("MiddleTile");
-        middleTile.transform.position = new Vector3(-1.37f, 0.18455f, _spawnZ - 18);
+        middleTile.transform.position = new Vector3(-1.37f, 0.18455f, _spawnZ - roadZOffset);
         middleTile.transform.SetParent(section.transform);
 
         GameObject rightTile = PoolManager.s_Instance.GetObject("RightTile");
-        rightTile.transform.position = new Vector3(1.53f, 0.18455f, _spawnZ - 18);
+        rightTile.transform.position = new Vector3(1.53f, 0.18455f, _spawnZ - roadZOffset);
         rightTile.transform.SetParent(section.transform);
     }
 
     private void RecycleSection()
     {
         GameObject section = activeSections[0];
-        // Collect all children to be recycled into a list
+
+        // Collect all children to be recycled into a separate list,
+        // because you can't iterate over and modify children in the same loop.
         List<GameObject> childrenToRecycle = new List<GameObject>();
         foreach (Transform child in section.transform)
         {
@@ -90,9 +96,10 @@ public class LevelController : MonoBehaviour
         // Recycle all collected children
         foreach (GameObject child in childrenToRecycle)
         {
-            child.transform.SetParent(null);
+            child.transform.SetParent(null); // de-assign from the parent section.
             PoolManager.s_Instance.ReturnObject(child, child.tag);
         }
+
         // Check if all children are recycled
         if (section.transform.childCount > 0)
         {
