@@ -86,4 +86,21 @@ public class PoolManager : MonoBehaviour
         obj.SetActive(false);
         _poolDictionary[name].Enqueue(obj);
     }
+
+    // TODO: Find out if this is needed...
+    //public void ResetObject(GameObject obj)
+    //{
+    //    obj.transform.position = Vector3.zero;
+    //    obj.transform.rotation = Quaternion.identity;
+    //    obj.transform.localScale = Vector3.one;
+    //
+    //    // If has a rigidbody.
+    //    var rb = obj.GetComponent<Rigidbody>();
+    //    if (rb != null)
+    //    {
+    //        rb.velocity = Vector3.zero;
+    //        rb.angularVelocity = Vector3.zero;
+    //        // what else?
+    //    }
+    //}
 }
