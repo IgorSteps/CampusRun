@@ -324,6 +324,9 @@ MonoBehaviour:
   - name: Car
     prefab: {fileID: 1098664898953688, guid: f6215ce03e40b3c43a8b1622f794d0ce, type: 3}
     poolSize: 100
+  - name: FracturedCrate
+    prefab: {fileID: 2471928902266168829, guid: 5ca66cbcc2691004f82ed4c0caea134f, type: 3}
+    poolSize: 100
 --- !u!114 &303009128
 MonoBehaviour:
   m_ObjectHideFlags: 0

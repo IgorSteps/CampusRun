@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CoinCollection : MonoBehaviour
 {
-    private AudioSource _coinCollectSound;
+    [SerializeField] private AudioSource _coinCollectSound;
 
     private void Start()
     {

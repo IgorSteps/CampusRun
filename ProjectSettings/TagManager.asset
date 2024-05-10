@@ -18,6 +18,7 @@ TagManager:
   - Skip
   - Column
   - Car
+  - FracturedCrate
   layers:
   - Default
   - TransparentFX

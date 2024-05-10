@@ -23,6 +23,9 @@ public class Recycler : MonoBehaviour
                 case "Obstacle":
                     PoolManager.s_Instance.ReturnObject(child.gameObject, "Obstacle");
                     break;
+                case "FracturedCrate":
+                    PoolManager.s_Instance.ReturnObject(child.gameObject, "FracturedCrate");
+                    break;
                 case "Column":
                     PoolManager.s_Instance.ReturnObject(child.gameObject, "Column");
                     break;
