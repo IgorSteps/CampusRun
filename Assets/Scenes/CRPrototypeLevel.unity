@@ -356,7 +356,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1150559821}
   _spawnZ: 0
-  _sectionLength: 30
   _numSectionsOnScreen: 5
   _safeZone: 50
 --- !u!114 &303009129
@@ -1132,7 +1131,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  _frontSpeed: 5
+  _frontSpeed: 8
   _sideSpeed: 4
   _upSpeed: 0
   _characterController: {fileID: 1150559823}

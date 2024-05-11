@@ -81,7 +81,7 @@ public class LanePopulator : MonoBehaviour
                     if (columnNoise > _columnPlacementThreshold)
                     {
                         float columnX = startPosition.x - lane * 3.0f;
-                        PlaceColumn(columnX, startPosition.y + 1.70f, startPosition.z + currentZ);
+                        PlaceColumn(columnX, startPosition.y - 0.3f, startPosition.z + currentZ);
                         laneFilled[lane] = true;
                     }
                 }
@@ -131,10 +131,19 @@ public class LanePopulator : MonoBehaviour
     private void PlaceColumn(float xPos, float yPos, float zPos)
     {
         GameObject column = PoolManager.s_Instance.GetObject("Column");
+        GameObject lowerCrate = PoolManager.s_Instance.GetObject("Obstacle");
+        GameObject upperCrate = PoolManager.s_Instance.GetObject("Obstacle");
         if (column != null)
         {
             column.transform.position = new Vector3(xPos, yPos, zPos);
             column.transform.SetParent(this.transform, false);
+            if (lowerCrate != null && upperCrate != null)
+            {
+                lowerCrate.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+                lowerCrate.transform.SetParent(column.transform, false);
+                upperCrate.transform.position = new Vector3(0.0f, 1.0f, 0.0f);
+                upperCrate.transform.SetParent(column.transform, false);
+            }
         }
     }
 
