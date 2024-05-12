@@ -296,7 +296,7 @@ MonoBehaviour:
     poolSize: 500
   - name: Obstacle
     prefab: {fileID: 6447238721999038100, guid: 9480f54e236a85343a7ecc7b5650c840, type: 3}
-    poolSize: 200
+    poolSize: 1000
   - name: Tree1
     prefab: {fileID: 1608096764148392, guid: e8cba87a38597cb438f18dd353355c01, type: 3}
     poolSize: 100
@@ -320,28 +320,22 @@ MonoBehaviour:
     poolSize: 200
   - name: Column
     prefab: {fileID: 6042385119247624003, guid: 0259ce7aaac8f0c4ca62c5538522b5d7, type: 3}
-    poolSize: 300
+    poolSize: 250
   - name: Car
     prefab: {fileID: 1098664898953688, guid: f6215ce03e40b3c43a8b1622f794d0ce, type: 3}
     poolSize: 100
   - name: FracturedCrate
     prefab: {fileID: 2471928902266168829, guid: 5ca66cbcc2691004f82ed4c0caea134f, type: 3}
     poolSize: 100
-  - name: LeftGround
+  - name: Ground
     prefab: {fileID: 1482702856317318438, guid: bcc568fb0c385dc4c91d4bf6f33f836d, type: 3}
-    poolSize: 15
-  - name: RightGround
-    prefab: {fileID: 5598066755231492551, guid: b38debfe4496d8c4f909bb577b2164be, type: 3}
-    poolSize: 15
-  - name: MiddleTile
-    prefab: {fileID: 2327450751740080514, guid: aea4a5128b88d3d4d98fe46a9e827f0e, type: 3}
-    poolSize: 15
-  - name: LeftTile
+    poolSize: 20
+  - name: Tile
     prefab: {fileID: 1673162817062846022, guid: 5ecbc15f56ba5094fa506a4d4b82b308, type: 3}
-    poolSize: 15
-  - name: RightTile
-    prefab: {fileID: 6472666470818377546, guid: 2975d357acfada74eb8f0298fda57473, type: 3}
-    poolSize: 15
+    poolSize: 30
+  - name: Mountain
+    prefab: {fileID: 5251274012778597647, guid: 72773b264a176244fb1b2ecd3fa06a15, type: 3}
+    poolSize: 20
 --- !u!114 &303009128
 MonoBehaviour:
   m_ObjectHideFlags: 0

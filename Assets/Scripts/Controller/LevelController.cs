@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static System.Collections.Specialized.BitVector32;
 
 /// <summary>
 /// LevelController manages the spawning and recycling level sections.
@@ -48,65 +49,89 @@ public class LevelController : MonoBehaviour
     {
         GameObject section = PoolManager.s_Instance.GetObject("Section");
         section.transform.position = new Vector3(0, 0, _spawnZ);
-        SetupSection(section);
+        PrepareSection(section);
         _spawnZ += Constants.SECTION_LENGTH;
         activeSections.Add(section);
     }
 
     /// <summary>
-    /// Setup the section design, needs to be done here because if these objects just exist on the Section prefab
-    /// they never get recycled/pulled as they don't come from the pool.
+    /// PrepareSection sets up the section design, needs to be done here because if these objects just
+    /// exist on the Section prefab they never get recycled/pulled as they don't come from the pool.
     /// </summary>
-    /// <param name="section"></param>
-    private void SetupSection(GameObject section)
+    private void PrepareSection(GameObject section)
     {
-        GameObject leftGround = PoolManager.s_Instance.GetObject("LeftGround");
+        // Mountains.
+        GameObject leftMountain = PoolManager.s_Instance.GetObject("Mountain");
+        leftMountain.transform.position = new Vector3(-24.05f, -0.092f, _spawnZ);
+        leftMountain.transform.SetParent(section.transform);
+
+        GameObject rightMountain = PoolManager.s_Instance.GetObject("Mountain");
+        rightMountain.transform.position = new Vector3(24.05f, -0.092f, _spawnZ);
+        rightMountain.transform.SetParent(section.transform);
+
+        // Grounds.
+        GameObject leftGround = PoolManager.s_Instance.GetObject("Ground");
         leftGround.transform.position = new Vector3(-12.05f, -0.092f, _spawnZ);
         leftGround.transform.SetParent(section.transform);
 
-        GameObject rightGround = PoolManager.s_Instance.GetObject("RightGround");
+        GameObject rightGround = PoolManager.s_Instance.GetObject("Ground");
         rightGround.transform.position = new Vector3(12.05f, -0.092f, _spawnZ);
         rightGround.transform.SetParent(section.transform);
 
-        GameObject leftTile = PoolManager.s_Instance.GetObject("LeftTile");
+        // Road tiles.
+        GameObject leftTile = PoolManager.s_Instance.GetObject("Tile");
         leftTile.transform.position = new Vector3(-4.27f, 0.18455f, _spawnZ - roadZOffset);
         leftTile.transform.SetParent(section.transform);
 
-        GameObject middleTile = PoolManager.s_Instance.GetObject("MiddleTile");
+        GameObject middleTile = PoolManager.s_Instance.GetObject("Tile");
         middleTile.transform.position = new Vector3(-1.37f, 0.18455f, _spawnZ - roadZOffset);
         middleTile.transform.SetParent(section.transform);
 
-        GameObject rightTile = PoolManager.s_Instance.GetObject("RightTile");
+        GameObject rightTile = PoolManager.s_Instance.GetObject("Tile");
         rightTile.transform.position = new Vector3(1.53f, 0.18455f, _spawnZ - roadZOffset);
         rightTile.transform.SetParent(section.transform);
     }
 
+    /// <summary>
+    /// Recycle sections and children recursively.
+    /// </summary>
     private void RecycleSection()
     {
         GameObject section = activeSections[0];
 
-        // Collect all children to be recycled into a separate list,
-        // because you can't iterate over and modify children in the same loop.
-        List<GameObject> childrenToRecycle = new List<GameObject>();
-        foreach (Transform child in section.transform)
-        {
-            childrenToRecycle.Add(child.gameObject);
-        }
-
-        // Recycle all collected children
-        foreach (GameObject child in childrenToRecycle)
-        {
-            child.transform.SetParent(null); // de-assign from the parent section.
-            PoolManager.s_Instance.ReturnObject(child, child.tag);
-        }
-
-        // Check if all children are recycled
-        if (section.transform.childCount > 0)
-        {
-            Debug.LogError("Failed to recycle all children, there are '" + section.transform.childCount + "' children left.");
-        }
+        // Recycle all children aand children of children etc of the section.
+        RecycleChildrenRecursively(section);
 
         activeSections.RemoveAt(0);
         PoolManager.s_Instance.ReturnObject(section, "Section");
+    }
+
+    /// <summary>
+    /// RecycleChildrenRecursively recuresively recycles children if the parent.
+    /// </summary>
+    private void RecycleChildrenRecursively(GameObject parent)
+    {
+        // Needs a temporary list to hold children because you can't modify lists during iteration(thanks C#).
+        List<GameObject> children = new List<GameObject>();
+        foreach (Transform child in parent.transform)
+        {
+            children.Add(child.gameObject);
+        }
+
+        foreach (GameObject child in children)
+        {
+            // Recursively recycle the children of this child.
+            RecycleChildrenRecursively(child);
+
+            // Unparent and return to the pool.
+            child.transform.SetParent(null);
+            PoolManager.s_Instance.ReturnObject(child, child.tag);
+        }
+
+        // Let's log in case the above failed.
+        if (parent.transform.childCount > 0)
+        {
+            Debug.LogWarning("Failed to recycle all '" + parent.name + "' children, there are '" + parent.transform.childCount + "' children left.");
+        }
     }
 }
