@@ -59,8 +59,8 @@ public class SceneryPopulator : MonoBehaviour
     private void PlaceTree(int treeType, Vector3 pos)
     {
         // Build the name of the tree pool name, in the format TreeNumber.
-        string treePoolName = string.Format("Tree"+treeType);
-        GameObject tree = PoolManager.s_Instance.GetObject(treePoolName);
+        string treeName = "Tree_" + treeType.ToString("D2"); // Formats treeType as 00
+        GameObject tree = PoolManager.s_Instance.GetObject(treeName);
         if (tree != null)
         {
             tree.transform.position = pos;

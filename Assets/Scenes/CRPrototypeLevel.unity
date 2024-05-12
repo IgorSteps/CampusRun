@@ -293,49 +293,127 @@ MonoBehaviour:
     poolSize: 10
   - name: Coin
     prefab: {fileID: 1591165099382186, guid: a7e6a81ccb8638e41a833be024e06d89, type: 3}
-    poolSize: 500
-  - name: Obstacle
+    poolSize: 400
+  - name: Crate
     prefab: {fileID: 6447238721999038100, guid: 9480f54e236a85343a7ecc7b5650c840, type: 3}
-    poolSize: 1000
-  - name: Tree1
+    poolSize: 400
+  - name: Tree_01
     prefab: {fileID: 1608096764148392, guid: e8cba87a38597cb438f18dd353355c01, type: 3}
     poolSize: 100
-  - name: Tree2
+  - name: Tree_02
     prefab: {fileID: 1407229615668976, guid: 195bfeab1fd63da4892ce170203d890e, type: 3}
     poolSize: 100
-  - name: Tree3
+  - name: Tree_03
     prefab: {fileID: 1046268137424332, guid: ca6c65d983fe82c4abd9c162ce47d5a6, type: 3}
     poolSize: 100
-  - name: Tree4
+  - name: Tree_04
     prefab: {fileID: 1554581858039714, guid: d0e825257ded2eb4fafb2d235e4f0fe8, type: 3}
     poolSize: 100
   - name: SmallRocks
     prefab: {fileID: 1398337415367500, guid: b8b2bd1a454b5054898a483ad8dde53f, type: 3}
-    poolSize: 200
+    poolSize: 50
   - name: TreeStump
     prefab: {fileID: 1267589063166154, guid: befed178aba2e514dbbe281ed50a481a, type: 3}
-    poolSize: 200
+    poolSize: 50
   - name: Rock
     prefab: {fileID: 1265567056653560, guid: c99ae13a9e3a8914cb16b4c26bf0d5f2, type: 3}
-    poolSize: 200
+    poolSize: 50
   - name: Column
     prefab: {fileID: 6042385119247624003, guid: 0259ce7aaac8f0c4ca62c5538522b5d7, type: 3}
     poolSize: 250
   - name: Car
     prefab: {fileID: 1098664898953688, guid: f6215ce03e40b3c43a8b1622f794d0ce, type: 3}
     poolSize: 100
-  - name: FracturedCrate
-    prefab: {fileID: 2471928902266168829, guid: 5ca66cbcc2691004f82ed4c0caea134f, type: 3}
-    poolSize: 100
   - name: Ground
     prefab: {fileID: 1482702856317318438, guid: bcc568fb0c385dc4c91d4bf6f33f836d, type: 3}
-    poolSize: 20
+    poolSize: 10
   - name: Tile
     prefab: {fileID: 1673162817062846022, guid: 5ecbc15f56ba5094fa506a4d4b82b308, type: 3}
-    poolSize: 30
+    poolSize: 15
   - name: Mountain
     prefab: {fileID: 5251274012778597647, guid: 72773b264a176244fb1b2ecd3fa06a15, type: 3}
+    poolSize: 10
+  - name: Glass
+    prefab: {fileID: 8110221652024513296, guid: fd6c11a00e38ca941b01032a7f70c9e3, type: 3}
     poolSize: 20
+  - name: SteeringWheel
+    prefab: {fileID: 411588102609476516, guid: 58708dc24032ee44ea1c88be8f99d289, type: 3}
+    poolSize: 20
+  - name: Plates
+    prefab: {fileID: 3725113936924723940, guid: c0cbd387a957ad04f8b8e9c3060217ba, type: 3}
+    poolSize: 20
+  - name: FrontLeftWheel
+    prefab: {fileID: 3445227905785305505, guid: edd38a23c6ae2c94ab92035c65e0bd21, type: 3}
+    poolSize: 20
+  - name: RearLeftWheel
+    prefab: {fileID: 6238812794234915909, guid: 48b346439bbb50c40885a818bc8298db, type: 3}
+    poolSize: 20
+  - name: FrontRightWheel
+    prefab: {fileID: 3305974265292668473, guid: 21b1f6e8b017b064f9e4f454ecabc553, type: 3}
+    poolSize: 20
+  - name: RearRightWheel
+    prefab: {fileID: 7256480000066512512, guid: a54febee1f05ece45bc066a5ab661fb7, type: 3}
+    poolSize: 20
+  - name: FracturedCrate
+    prefab: {fileID: 9152432883670217336, guid: a03c8f759445c23438a4ae2d2c0a353b, type: 3}
+    poolSize: 100
+  - name: InnerFrame0
+    prefab: {fileID: 1027398568540802155, guid: 0dfc4af05ca0a21449bdccffa4f588fb, type: 3}
+    poolSize: 100
+  - name: InnerFrame1
+    prefab: {fileID: 3524141952929949088, guid: 7233b86baef892d4cbcff12b5ac21b5d, type: 3}
+    poolSize: 100
+  - name: InnerFrame2
+    prefab: {fileID: 4767346989418389023, guid: be7de8731a9580e49acef17879b09537, type: 3}
+    poolSize: 100
+  - name: OuterFrame0
+    prefab: {fileID: 7144885486971072896, guid: 901cba5188219a94aa40ad601f8392e8, type: 3}
+    poolSize: 100
+  - name: OuterFrame1
+    prefab: {fileID: 4873985634522849411, guid: 6006680ff7a5d9647a3f4e2ae45e6907, type: 3}
+    poolSize: 100
+  - name: OuterFrame2
+    prefab: {fileID: 284287910985255744, guid: 5c4dd14648ee9a149930b1553b08ada9, type: 3}
+    poolSize: 100
+  - name: OuterFrame3
+    prefab: {fileID: 8454945295706903564, guid: 681eb2d35b563fa4dbe568698dca8cb1, type: 3}
+    poolSize: 100
+  - name: OuterFrame4
+    prefab: {fileID: 4841852212994334941, guid: 9e051e7d3964d4a47bb2fd5418bca661, type: 3}
+    poolSize: 100
+  - name: OuterFrame5
+    prefab: {fileID: 5511330171081012774, guid: c1695f34d6e488f4ba694328f65f3485, type: 3}
+    poolSize: 100
+  - name: OuterFrame6
+    prefab: {fileID: 323389748137393920, guid: 15e6e6320aa8db445a4158ab62886444, type: 3}
+    poolSize: 100
+  - name: OuterFrame7
+    prefab: {fileID: 8840697565423712436, guid: db72821b0f048764590e9b362710cd2a, type: 3}
+    poolSize: 100
+  - name: OuterFrame8
+    prefab: {fileID: 2294420955250348221, guid: a5cfd04e54a1c4b4182a798ad59cb1cf, type: 3}
+    poolSize: 100
+  - name: OuterFrame9
+    prefab: {fileID: 7982661095224596288, guid: 8fd569ed0e965964f89d24616b0d5d91, type: 3}
+    poolSize: 100
+  - name: OuterFrame10
+    prefab: {fileID: 1827623098712629369, guid: 54e82d560c0a4f645beaf15da7c0f240, type: 3}
+    poolSize: 100
+  - name: OuterFrame11
+    prefab: {fileID: 6916144574142955934, guid: e7a03ad1ebf68d34591fd28049b8055a, type: 3}
+    poolSize: 100
+  - name: OuterFrame12
+    prefab: {fileID: 4086577181115927292, guid: ff26f0541b2f94248af06b3cda395c06, type: 3}
+    poolSize: 100
+  - name: OuterFrame13
+    prefab: {fileID: 2012148158962552335, guid: 15eb24d10274a6d4e85199e542781be6, type: 3}
+    poolSize: 100
+  - name: OuterFrame14
+    prefab: {fileID: 8488386071599035993, guid: 819a7fb77365a0b4c8359e42f7bb975c, type: 3}
+    poolSize: 100
+  - name: OuterFrame15
+    prefab: {fileID: 6306344641415188347, guid: 6c68697cc72a6bb4f966b571717f0016, type: 3}
+    poolSize: 100
 --- !u!114 &303009128
 MonoBehaviour:
   m_ObjectHideFlags: 0

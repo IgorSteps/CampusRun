@@ -25,6 +25,11 @@ public class MovingObstacle : MonoBehaviour
         {
             transform.Translate(_speed * Time.deltaTime * Vector3.back, Space.World);
         }
+        // Once passes the player - disable this script, so we don't do unnecessary explosion behind the player.
+        if (_player.transform.position.z - _moveOffset/2 > gameObject.transform.position.z)
+        {
+            this.enabled = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,13 +49,16 @@ public class MovingObstacle : MonoBehaviour
 
     void Explode(Collider crate)
     {
-        PoolManager.s_Instance.ReturnObject(crate.gameObject, "Obstacle");
+        PoolManager.s_Instance.ReturnObject(crate.gameObject);
         
         GameObject fracturedCrate = PoolManager.s_Instance.GetObject("FracturedCrate");
         // Set parent to the section.
         fracturedCrate.transform.SetParent(crate.gameObject.transform.parent);
         // Set position to the position of the original create.
         fracturedCrate.transform.position = crate.gameObject.transform.position;
+
+        SetupFracturedCrate(fracturedCrate);
+
         foreach (Transform t in fracturedCrate.transform)
         {
             var rigidBody = t.GetComponent<Rigidbody>();
@@ -62,9 +70,6 @@ public class MovingObstacle : MonoBehaviour
 
             StartCoroutine(Shrink(t, 2));
         }
-
-        // Delay the recycle to give the time for animation to finish.
-        StartCoroutine(Recycle(fracturedCrate, 5));
     }
 
     IEnumerator Shrink(Transform t, float delay)
@@ -85,9 +90,25 @@ public class MovingObstacle : MonoBehaviour
         }
     }
 
-    IEnumerator Recycle(GameObject gameObj, float delay)
+    void SetupFracturedCrate(GameObject fracturedCrate)
     {
-        yield return new WaitForSeconds(delay);
-        PoolManager.s_Instance.ReturnObject(gameObj, "FracturedCrate");
+        // Setup inner pieces.
+        int numberOfInnerPieces = 3;
+        for (int i = 0; i < numberOfInnerPieces; i++)
+        {
+            string pieceName = "InnerFrame_cell." + i.ToString("D3");  // Formats i as 000.
+            GameObject piece = PoolManager.s_Instance.GetObject(pieceName);
+            piece.transform.SetParent(fracturedCrate.transform, false);
+        }
+
+        // Setup outer pieces.
+        int numberOfOuterPieces = 15;
+        for (int i = 0; i < numberOfOuterPieces; i++)
+        {
+            string pieceName = "OuterFrame_cell." + i.ToString("D3");  // Formats i as 000.
+            GameObject piece = PoolManager.s_Instance.GetObject(pieceName);
+            piece.transform.SetParent(fracturedCrate.transform, false);
+        }
     }
+
 }

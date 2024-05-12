@@ -40,8 +40,8 @@ public class LevelController : MonoBehaviour
     {
         if (_player.position.z - _safeZone > (_spawnZ - _numSectionsOnScreen * Constants.SECTION_LENGTH))
         {
-            SpawnSection();
             RecycleSection();
+            SpawnSection();
         }
     }
 
@@ -105,7 +105,7 @@ public class LevelController : MonoBehaviour
         RecycleChildrenRecursively(section);
 
         activeSections.RemoveAt(0);
-        PoolManager.s_Instance.ReturnObject(section, "Section");
+        PoolManager.s_Instance.ReturnObject(section);
     }
 
     /// <summary>
@@ -127,7 +127,7 @@ public class LevelController : MonoBehaviour
 
             // Unparent and return to the pool.
             child.transform.SetParent(null);
-            PoolManager.s_Instance.ReturnObject(child, child.tag);
+            PoolManager.s_Instance.ReturnObject(child);
         }
 
         // Let's log in case the above failed.
