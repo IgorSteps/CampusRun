@@ -32,8 +32,11 @@ public class Constants
     public static readonly int NUM_OF_LANES = 3;
     public static readonly Vector3 START_POS = new(3.0f, 1.0f, 0.0f);
 
-    // Car placement:
+    // Car placement.
     public static readonly float CAR_Y_OFFSET = 0.9f;
     public static readonly float MIN_CAR_SPACING = 6.0f;
     public static readonly float MAX_CAR_SPACING = 10.0f;
+
+    // Crate placement.
+    public static readonly float CRATE_Y_OFFSET = 0.3f;
 }
