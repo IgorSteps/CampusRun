@@ -14,15 +14,18 @@ public class LanePopulator : MonoBehaviour
     private float _cratePerlinScale = 0.1f;
     private float _columnPerlinScale = 0.1f;
     private float _carPerlinScale = 0.1f;
+    private float _magnetPerlinScale = 0.1f;
     // Noise offsets for coin and obstacle.
     private float _coinPerlinOffset;
     private float _cratePerlinOffset;
     private float _columnPerlinOffset;
     private float _carPerlinOffset;
+    private float _magnetPerlinOffset;
     // Threshold controls obstacle density. Lower means more obstacles. Higher means decreased frequency.
     private float _cratePlacementThreshold = 0.6f;
     private float _columnPlacementThreshold = 0.6f;
     private float _carPlacementThreshold = 0.8f;
+    private float _magnetPlacementThreshold = 0.9f;
 
     // Constants.
     private Vector3 _startPosition =Constants.START_POS;
@@ -33,6 +36,7 @@ public class LanePopulator : MonoBehaviour
         _cratePerlinOffset = Random.Range(0f, 10000f);
         _columnPerlinOffset = Random.Range(0f, 10000f);
         _carPerlinOffset = Random.Range(0f, 10000f);
+        _magnetPerlinOffset = Random.Range(0f, 10000f);
         Populate();
     }
 
@@ -89,6 +93,20 @@ public class LanePopulator : MonoBehaviour
                         PlaceCar(GetXPosition(lane), _startPosition.y - Constants.CAR_Y_OFFSET, _startPosition.z + currentZ);
                         float carSpacing = Random.Range(Constants.MIN_CAR_SPACING, Constants.MAX_CAR_SPACING);
                         currentZ += carSpacing;
+                    }
+                }
+            }
+
+            // Place magnets.
+            for (int lane = 0; lane < 3; lane++)
+            {
+                if (!laneFilled[lane])
+                {
+                    float magnetValue = Mathf.PerlinNoise(_magnetPerlinOffset, currentZ * _magnetPerlinScale + lane);
+                    if (magnetValue > _magnetPlacementThreshold)
+                    {
+                        PlaceMagnet(GetXPosition(lane), _startPosition.y, _startPosition.z + currentZ);
+                        laneFilled[lane] = true;
                     }
                 }
             }
@@ -165,6 +183,13 @@ public class LanePopulator : MonoBehaviour
             GameObject rrWheel = PoolManager.s_Instance.GetObject("RearRightWheel");
             rrWheel.transform.SetParent(car.transform, false);
         }
+    }
+
+    private void PlaceMagnet(float xPos, float yPos, float zPos)
+    {
+        GameObject magnet = PoolManager.s_Instance.GetObject("Magnet");
+        magnet.transform.position = new Vector3(xPos, yPos, zPos);
+        magnet.transform.SetParent(this.transform, false);
     }
 
     /// <summary>

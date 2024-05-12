@@ -49,6 +49,7 @@ public class MovingObstacle : MonoBehaviour
 
     void Explode(Collider crate)
     {
+        crate.gameObject.transform.SetParent(null);
         PoolManager.s_Instance.ReturnObject(crate.gameObject);
         
         GameObject fracturedCrate = PoolManager.s_Instance.GetObject("FracturedCrate");

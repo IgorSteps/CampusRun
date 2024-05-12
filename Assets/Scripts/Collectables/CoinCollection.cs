@@ -15,6 +15,7 @@ public class CoinCollection : MonoBehaviour
         {
             _coinCollectSound.Play();
             ScoreController.s_CoinScore += 1;
+            gameObject.transform.SetParent(null);
             PoolManager.s_Instance.ReturnObject(gameObject);
         }
     }
