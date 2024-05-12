@@ -15,7 +15,7 @@ public class ShowStartScreen : MonoBehaviour
 
     IEnumerator Beginning()
     {
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(0);
     }
 }

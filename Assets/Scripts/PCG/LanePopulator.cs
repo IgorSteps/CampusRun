@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using static System.Collections.Specialized.BitVector32;
 
 /// <summary>
 /// LanePopulator handles procedural coin and obstacle content generation for each section using Perlin Noise.
@@ -19,7 +21,7 @@ public class LanePopulator : MonoBehaviour
     private float _carPerlinOffset;
     // Threshold controls obstacle density. Lower means more obstacles. Higher means decreased frequency.
     private float _cratePlacementThreshold = 0.6f;
-    private float _columnPlacementThreshold = 0.7f;
+    private float _columnPlacementThreshold = 0.6f;
     private float _carPlacementThreshold = 0.7f;
 
     private const float _laneWidth = 3.0f;
@@ -88,20 +90,20 @@ public class LanePopulator : MonoBehaviour
             }
 
             // Place cars.
-            for (int lane = 0; lane < 3; lane++)
-            {
-                if (!laneFilled[lane])
-                {
-                    float carObstacleValue = Mathf.PerlinNoise(_carPerlinOffset, currentZ * _carPerlinScale + lane);
-                    if (carObstacleValue > _carPlacementThreshold)
-                    {
-                        float carX = startPosition.x - lane * _laneWidth;
-                        PlaceCar(carX, startPosition.y - _carYOffset, startPosition.z + currentZ);
-                        float carSpacing = UnityEngine.Random.Range(_minCarSpacing, _maxCarSpacing);
-                        currentZ += carSpacing;
-                    }
-                }
-            }
+            //for (int lane = 0; lane < 3; lane++)
+            //{
+            //    if (!laneFilled[lane])
+            //    {
+            //        float carObstacleValue = Mathf.PerlinNoise(_carPerlinOffset, currentZ * _carPerlinScale + lane);
+            //        if (carObstacleValue > _carPlacementThreshold)
+            //        {
+            //            float carX = startPosition.x - lane * _laneWidth;
+            //            PlaceCar(carX, startPosition.y - _carYOffset, startPosition.z + currentZ);
+            //            float carSpacing = UnityEngine.Random.Range(_minCarSpacing, _maxCarSpacing);
+            //            currentZ += carSpacing;
+            //        }
+            //    }
+            //}
 
             // Increment z position by the spacing.
             currentZ += _spacing;

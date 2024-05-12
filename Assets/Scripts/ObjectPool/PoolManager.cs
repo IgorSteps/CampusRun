@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
@@ -19,7 +20,6 @@ public class PoolManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        Debug.Log("Waking up Pool Manager");
         s_Instance = this;
         _poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
@@ -43,8 +43,9 @@ public class PoolManager : MonoBehaviour
 
             // Add that pool to dictionary.
             _poolDictionary.Add(pool.name, objectPool);
-            Debug.Log("Added '"+ pool.name + "' pool to pool dictionary");
         }
+
+        Debug.Log("PoolManager is ready");
     }
 
     /// <summary>
@@ -62,11 +63,12 @@ public class PoolManager : MonoBehaviour
         {
             GameObject obj = _poolDictionary[name].Dequeue();
             obj.SetActive(true);
+            
             return obj;
         }
         else
         {
-            // TODO: Dynamically create extra objects.
+            // TODO: Dynamically create extra objects?
             Debug.LogWarning("All objects in the '" + name + "' pool are in use.");
             return null;
         }
@@ -82,7 +84,7 @@ public class PoolManager : MonoBehaviour
             Debug.LogWarning("Pool '" + name + "' doesn't exist.");
             return;
         }
-
+        //ResetObject(obj);
         obj.SetActive(false);
         _poolDictionary[name].Enqueue(obj);
     }
@@ -90,10 +92,12 @@ public class PoolManager : MonoBehaviour
     // TODO: Find out if this is needed...
     //public void ResetObject(GameObject obj)
     //{
-    //    obj.transform.position = Vector3.zero;
-    //    obj.transform.rotation = Quaternion.identity;
-    //    obj.transform.localScale = Vector3.one;
-    //
+    //    // Don't do this because this resets the section design(grounds, tiles and mountains.)
+    //    // TODO: Programmatically setup dimensions of those thigs to allow for this?
+    //    //obj.transform.position = Vector3.zero;
+    //    //obj.transform.rotation = Quaternion.identity;
+    //    //obj.transform.localScale = Vector3.one;
+
     //    // If has a rigidbody.
     //    var rb = obj.GetComponent<Rigidbody>();
     //    if (rb != null)
