@@ -336,6 +336,27 @@ MonoBehaviour:
   - name: Mountain
     prefab: {fileID: 5251274012778597647, guid: 72773b264a176244fb1b2ecd3fa06a15, type: 3}
     poolSize: 20
+  - name: Glass
+    prefab: {fileID: 8110221652024513296, guid: fd6c11a00e38ca941b01032a7f70c9e3, type: 3}
+    poolSize: 100
+  - name: SteeringWheel
+    prefab: {fileID: 411588102609476516, guid: 58708dc24032ee44ea1c88be8f99d289, type: 3}
+    poolSize: 100
+  - name: Plates
+    prefab: {fileID: 3725113936924723940, guid: c0cbd387a957ad04f8b8e9c3060217ba, type: 3}
+    poolSize: 100
+  - name: FrontLeftWheel
+    prefab: {fileID: 3445227905785305505, guid: edd38a23c6ae2c94ab92035c65e0bd21, type: 3}
+    poolSize: 100
+  - name: FrontRightWheel
+    prefab: {fileID: 3305974265292668473, guid: 21b1f6e8b017b064f9e4f454ecabc553, type: 3}
+    poolSize: 100
+  - name: RearRightWheel
+    prefab: {fileID: 7256480000066512512, guid: a54febee1f05ece45bc066a5ab661fb7, type: 3}
+    poolSize: 100
+  - name: RearLeftWheel
+    prefab: {fileID: 6238812794234915909, guid: 48b346439bbb50c40885a818bc8298db, type: 3}
+    poolSize: 100
 --- !u!114 &303009128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1017,7 +1038,7 @@ GameObject:
   - component: {fileID: 1150559824}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

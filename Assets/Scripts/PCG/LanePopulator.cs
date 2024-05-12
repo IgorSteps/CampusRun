@@ -89,21 +89,21 @@ public class LanePopulator : MonoBehaviour
                 }
             }
 
-            // Place cars.
-            //for (int lane = 0; lane < 3; lane++)
-            //{
-            //    if (!laneFilled[lane])
-            //    {
-            //        float carObstacleValue = Mathf.PerlinNoise(_carPerlinOffset, currentZ * _carPerlinScale + lane);
-            //        if (carObstacleValue > _carPlacementThreshold)
-            //        {
-            //            float carX = startPosition.x - lane * _laneWidth;
-            //            PlaceCar(carX, startPosition.y - _carYOffset, startPosition.z + currentZ);
-            //            float carSpacing = UnityEngine.Random.Range(_minCarSpacing, _maxCarSpacing);
-            //            currentZ += carSpacing;
-            //        }
-            //    }
-            //}
+            //Place cars.
+            for (int lane = 0; lane < 3; lane++)
+            {
+                if (!laneFilled[lane])
+                {
+                    float carObstacleValue = Mathf.PerlinNoise(_carPerlinOffset, currentZ * _carPerlinScale + lane);
+                    if (carObstacleValue > _carPlacementThreshold)
+                    {
+                        float carX = startPosition.x - lane * _laneWidth;
+                        PlaceCarNewWay(carX, startPosition.y - _carYOffset, startPosition.z + currentZ);
+                        float carSpacing = UnityEngine.Random.Range(_minCarSpacing, _maxCarSpacing);
+                        currentZ += carSpacing;
+                    }
+                }
+            }
 
             // Increment z position by the spacing.
             currentZ += _spacing;
@@ -158,4 +158,35 @@ public class LanePopulator : MonoBehaviour
             car.transform.SetParent(this.transform, false);
         }
     }
+
+    private void PlaceCarNewWay(float xPos, float yPos, float zPos)
+    {
+        GameObject car = PoolManager.s_Instance.GetObject("Car");
+        if (car != null)
+        {
+            car.transform.position = new Vector3(xPos, yPos, zPos);
+            car.transform.SetParent(this.transform, false);
+
+            // Car pieces, no need to set positions here as they are set in the prefabs.
+            // Glass.
+            GameObject glass = PoolManager.s_Instance.GetObject("Glass");
+            glass.transform.SetParent(car.transform, false);
+            // Plates.
+            GameObject plates = PoolManager.s_Instance.GetObject("Plates");
+            plates.transform.SetParent(car.transform, false);
+            // Steering.
+            GameObject steeringWheel = PoolManager.s_Instance.GetObject("SteeringWheel");
+            steeringWheel.transform.SetParent(car.transform, false);
+            // Wheels.
+            GameObject flWheel = PoolManager.s_Instance.GetObject("FrontLeftWheel");
+            flWheel.transform.SetParent(car.transform, false);
+            GameObject frWheel = PoolManager.s_Instance.GetObject("FrontRightWheel");
+            frWheel.transform.SetParent(car.transform, false);
+            GameObject rlWheel = PoolManager.s_Instance.GetObject("RearLeftWheel");
+            rlWheel.transform.SetParent(car.transform, false);
+            GameObject rrWheel = PoolManager.s_Instance.GetObject("RearRightWheel");
+            rrWheel.transform.SetParent(car.transform, false);
+        }
+    }
+
 }

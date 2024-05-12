@@ -28,6 +28,13 @@ TagManager:
   - LeftTile
   - MiddleTile
   - RightTile
+  - FrontLeftWheel
+  - FrontRightWheel
+  - RearLeftWheel
+  - RearRightWheel
+  - Glass
+  - Plates
+  - SteeringWheel
   layers:
   - Default
   - TransparentFX
