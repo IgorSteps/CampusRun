@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 /// <summary>
 /// PoolManager is a singleton that handles the creation, storage, retrieval, and recycling of game objects.
@@ -38,11 +39,12 @@ public class PoolManager : MonoBehaviour
                 // The rest of the objects, however, need to be disabled here.
                 // TODO: Find a way to make this more intuitive...
                 obj.SetActive(false);
+                obj.AddComponent<Poolable>().poolName = pool.prefab.name; // Add the component with the pool name
                 objectPool.Enqueue(obj);
             }
 
             // Add that pool to dictionary.
-            _poolDictionary.Add(pool.name, objectPool);
+            _poolDictionary.Add(pool.prefab.name, objectPool);
         }
 
         Debug.Log("PoolManager is ready");
@@ -77,34 +79,41 @@ public class PoolManager : MonoBehaviour
     /// <summary>
     /// ReturnObject deactivates and places the given object back into the pool with the given name. 
     /// </summary>
-    public void ReturnObject(GameObject obj, string name)
+    public void ReturnObject(GameObject obj)
     {
-        if (!_poolDictionary.ContainsKey(name))
+        Poolable poolable = obj.GetComponent<Poolable>();
+        if (poolable != null && _poolDictionary.ContainsKey(poolable.poolName))
         {
-            Debug.LogWarning("Pool '" + name + "' doesn't exist.");
-            return;
+            ResetObject(obj);
+            obj.SetActive(false);
+            _poolDictionary[poolable.poolName].Enqueue(obj);
         }
-        //ResetObject(obj);
-        obj.SetActive(false);
-        _poolDictionary[name].Enqueue(obj);
+        else if (poolable != null)
+        {
+            Debug.LogError("Pool '" + poolable.poolName + "' not found");
+        }
+        else
+        {
+            Debug.LogError("Poolable component missing on the '" + obj.name + "' game object.");
+        }
     }
 
-    // TODO: Find out if this is needed...
-    //public void ResetObject(GameObject obj)
-    //{
-    //    // Don't do this because this resets the section design(grounds, tiles and mountains.)
-    //    // TODO: Programmatically setup dimensions of those thigs to allow for this?
-    //    //obj.transform.position = Vector3.zero;
-    //    //obj.transform.rotation = Quaternion.identity;
-    //    //obj.transform.localScale = Vector3.one;
+    //TODO: Find out if this is needed...
+    public void ResetObject(GameObject obj)
+    {
+        // Don't do this because this resets the section design(grounds, tiles and mountains.)
+        // TODO: Programmatically setup dimensions of those thigs to allow for this?
+        //obj.transform.position = Vector3.zero;
+        //obj.transform.rotation = Quaternion.identity;
+        //obj.transform.localScale = Vector3.one;
 
-    //    // If has a rigidbody.
-    //    var rb = obj.GetComponent<Rigidbody>();
-    //    if (rb != null)
-    //    {
-    //        rb.velocity = Vector3.zero;
-    //        rb.angularVelocity = Vector3.zero;
-    //        // what else?
-    //    }
-    //}
+        // If has a rigidbody.
+        var rb = obj.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            // what else?
+        }
+    }
 }

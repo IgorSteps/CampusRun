@@ -122,7 +122,7 @@ public class LanePopulator : MonoBehaviour
 
     private void PlaceCrate(float xPos, float yPos, float zPos)
     {
-        GameObject obstacle = PoolManager.s_Instance.GetObject("Obstacle");
+        GameObject obstacle = PoolManager.s_Instance.GetObject("Crate");
         if (obstacle != null)
         {
             obstacle.transform.position = new Vector3(xPos, yPos, zPos);
@@ -133,8 +133,8 @@ public class LanePopulator : MonoBehaviour
     private void PlaceColumn(float xPos, float yPos, float zPos)
     {
         GameObject column = PoolManager.s_Instance.GetObject("Column");
-        GameObject lowerCrate = PoolManager.s_Instance.GetObject("Obstacle");
-        GameObject upperCrate = PoolManager.s_Instance.GetObject("Obstacle");
+        GameObject lowerCrate = PoolManager.s_Instance.GetObject("Crate");
+        GameObject upperCrate = PoolManager.s_Instance.GetObject("Crate");
         if (column != null)
         {
             column.transform.position = new Vector3(xPos, yPos, zPos);
@@ -149,15 +149,7 @@ public class LanePopulator : MonoBehaviour
         }
     }
 
-    private void PlaceCar(float xPos, float yPos, float zPos)
-    {
-        GameObject car = PoolManager.s_Instance.GetObject("Car");
-        if (car != null)
-        {
-            car.transform.position = new Vector3(xPos, yPos, zPos);
-            car.transform.SetParent(this.transform, false);
-        }
-    }
+  
 
     private void PlaceCarNewWay(float xPos, float yPos, float zPos)
     {

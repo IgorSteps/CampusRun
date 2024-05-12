@@ -4,37 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Section
-  - Coin
-  - Obstacle
-  - TreeStump
-  - SmallRocks
-  - Tree2
-  - Tree3
-  - Tree4
-  - Rock
-  - House
   - Skip
-  - Column
-  - Car
-  - FracturedCrate
-  - Tree1
-  - Tree
-  - Tile
-  - Mountain
-  - Ground
-  - LeftGround
-  - RightGround
-  - LeftTile
-  - MiddleTile
-  - RightTile
-  - FrontLeftWheel
-  - FrontRightWheel
-  - RearLeftWheel
-  - RearRightWheel
-  - Glass
-  - Plates
-  - SteeringWheel
+  - Obstacle
+  - Undefined
   layers:
   - Default
   - TransparentFX
