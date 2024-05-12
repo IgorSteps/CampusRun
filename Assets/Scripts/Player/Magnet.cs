@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Magnet : MonoBehaviour
 {
-    public float pullForce = 5f;
-    public float pullRadius = 5f;
+    private float _pullForce = 15f;
+    private float _pullRadius = 5f;
     public LayerMask coinLayer;
-    private bool isMagnetActive = false;
-    private float magnetDuration = 10f;
+    private bool _isMagnetActive = false;
+    private float _magnetDuration = 10f;
 
     private void Update()
     {
-        if (isMagnetActive)
+        if (_isMagnetActive)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, pullRadius, coinLayer);
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, _pullRadius, coinLayer);
             foreach (var hitCollider in hitColliders)
             {
                 Rigidbody rigidBody = hitCollider.GetComponent<Rigidbody>();
@@ -22,7 +22,7 @@ public class Magnet : MonoBehaviour
                 if (rigidBody != null)
                 {
                     Vector3 forceDirection = transform.position - hitCollider.transform.position;
-                    rigidBody.MovePosition(rigidBody.position + pullForce * Time.deltaTime * forceDirection.normalized);
+                    rigidBody.MovePosition(rigidBody.position + (_pullForce * Time.deltaTime * forceDirection.normalized));
                 }
             }
         }
@@ -33,19 +33,22 @@ public class Magnet : MonoBehaviour
         // Check if the collision is with a Magnet object.
         if (other.gameObject.CompareTag("Magnet"))
         {
-            ActivateMagnetEffect();
-            PoolManager.s_Instance.ResetObject(other.gameObject);
+            Activate();
+            
+            // Return to the pool.
+            other.gameObject.transform.SetParent(null);
+            PoolManager.s_Instance.ReturnObject(other.gameObject);
         }
     }
 
-    void ActivateMagnetEffect()
+    void Activate()
     {
-        isMagnetActive = true;
-        Invoke("DeactivateMagnetEffect", magnetDuration);
+        _isMagnetActive = true;
+        Invoke(nameof(Deactivate), _magnetDuration);
     }
 
-    void DeactivateMagnetEffect()
+    void Deactivate()
     {
-        isMagnetActive = false;
+        _isMagnetActive = false;
     }
 }

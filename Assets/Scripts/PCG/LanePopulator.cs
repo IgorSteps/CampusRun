@@ -43,6 +43,7 @@ public class LanePopulator : MonoBehaviour
     private void Populate()
     {
         float currentZ = 0f;
+        bool magnetPlaced = false;
         while (currentZ < Constants.SECTION_LENGTH)
         {
             // To keep track which lanes are filled.
@@ -100,13 +101,14 @@ public class LanePopulator : MonoBehaviour
             // Place magnets.
             for (int lane = 0; lane < 3; lane++)
             {
-                if (!laneFilled[lane])
+                if (!laneFilled[lane] && !magnetPlaced)
                 {
                     float magnetValue = Mathf.PerlinNoise(_magnetPerlinOffset, currentZ * _magnetPerlinScale + lane);
                     if (magnetValue > _magnetPlacementThreshold)
                     {
                         PlaceMagnet(GetXPosition(lane), _startPosition.y, _startPosition.z + currentZ);
                         laneFilled[lane] = true;
+                        magnetPlaced = true;
                     }
                 }
             }

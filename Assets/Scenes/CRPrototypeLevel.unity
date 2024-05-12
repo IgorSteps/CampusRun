@@ -414,6 +414,9 @@ MonoBehaviour:
   - name: OuterFrame15
     prefab: {fileID: 6306344641415188347, guid: 6c68697cc72a6bb4f966b571717f0016, type: 3}
     poolSize: 100
+  - name: Magnet
+    prefab: {fileID: 279208739186980637, guid: 2c0e948919dd72c4ea2aa9d16387a807, type: 3}
+    poolSize: 10
 --- !u!114 &303009128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1093,6 +1096,7 @@ GameObject:
   - component: {fileID: 1150559822}
   - component: {fileID: 1150559823}
   - component: {fileID: 1150559824}
+  - component: {fileID: 1150559825}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1268,6 +1272,21 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1150559825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150559817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a63f800b31d0c3447a7f24c3931070b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &1363845757
 GameObject:
   m_ObjectHideFlags: 0
