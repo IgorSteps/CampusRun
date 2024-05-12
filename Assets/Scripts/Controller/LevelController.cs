@@ -58,6 +58,8 @@ public class LevelController : MonoBehaviour
     /// PrepareSection sets up the section design, needs to be done here because if these objects just
     /// exist on the Section prefab they never get recycled/pulled as they don't come from the pool.
     /// </summary>
+    /// 
+    // TODO: set up scales and rotations programmatically.
     private void PrepareSection(GameObject section)
     {
         // Mountains.
@@ -99,7 +101,7 @@ public class LevelController : MonoBehaviour
     {
         GameObject section = activeSections[0];
 
-        // Recycle all children aand children of children etc of the section.
+        // Recycle all children and children of children etc of the section.
         RecycleChildrenRecursively(section);
 
         activeSections.RemoveAt(0);
@@ -107,7 +109,7 @@ public class LevelController : MonoBehaviour
     }
 
     /// <summary>
-    /// RecycleChildrenRecursively recuresively recycles children if the parent.
+    /// RecycleChildrenRecursively recuresively recycles children of the parent.
     /// </summary>
     private void RecycleChildrenRecursively(GameObject parent)
     {
