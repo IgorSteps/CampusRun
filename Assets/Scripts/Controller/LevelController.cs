@@ -40,8 +40,8 @@ public class LevelController : MonoBehaviour
     {
         if (_player.position.z - _safeZone > (_spawnZ - _numSectionsOnScreen * Constants.SECTION_LENGTH))
         {
-            SpawnSection();
             RecycleSection();
+            SpawnSection();
         }
     }
 

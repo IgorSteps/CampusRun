@@ -22,12 +22,10 @@ public class LanePopulator : MonoBehaviour
     // Threshold controls obstacle density. Lower means more obstacles. Higher means decreased frequency.
     private float _cratePlacementThreshold = 0.6f;
     private float _columnPlacementThreshold = 0.6f;
-    private float _carPlacementThreshold = 0.7f;
+    private float _carPlacementThreshold = 0.8f;
 
-    private const float _laneWidth = 3.0f;
-    private const float _carYOffset = 0.9f;
-    private const float _minCarSpacing = 6.0f;
-    private const float _maxCarSpacing = 10.0f;
+    // Constants.
+    private Vector3 _startPosition =Constants.START_POS;
 
     private void OnEnable()
     {
@@ -40,35 +38,30 @@ public class LanePopulator : MonoBehaviour
 
     private void Populate()
     {
-        Vector3 startPosition = new(3.0f, 1.0f, 0.0f); // TODO: Move to constants.
         float currentZ = 0f;
 
         while (currentZ < Constants.SECTION_LENGTH)
         {
-            // Keep track of which lanes are filled.
-            bool[] laneFilled = new bool[3];
+            // To keep track which lanes are filled.
+            bool[] laneFilled = new bool[Constants.NUM_OF_LANES];
 
-            // Generate a noise value for coin and floor it to the range of lane indices (0, 1, 2).
+            // Place coins.
             float coinNoiseValue = Mathf.PerlinNoise(_coinPerlinOffset, currentZ * _coinPerlinScale);
-            int counLaneIdx = Mathf.FloorToInt(coinNoiseValue * _laneWidth);
-            // Calculate the x position based on the lane index, where right-most lane is at _startPosition.x.
-            float coinLaneX = startPosition.x - counLaneIdx * _laneWidth;
-
-            PlaceCoin(coinLaneX, startPosition.y, startPosition.z + currentZ);
-            // Set the flag that this lane is now filled.
-            laneFilled[counLaneIdx] = true;
+            int coinLaneIdx = Mathf.FloorToInt(coinNoiseValue * Constants.NUM_OF_LANES);
+            float coinLaneX = _startPosition.x - coinLaneIdx * Constants.NUM_OF_LANES;
+            PlaceCoin(coinLaneX, _startPosition.y, _startPosition.z + currentZ);
+            laneFilled[coinLaneIdx] = true;
 
             // Place crates.
             for (int lane = 0; lane < 3; lane++)
             {
                 if (!laneFilled[lane])
                 {
-                    // Offset by lane index for diversity.
                     float obstacleNoiseValue = Mathf.PerlinNoise(_cratePerlinOffset, currentZ * _cratePerlinScale + lane);
-                    float obstacleLaneX = startPosition.x - lane * _laneWidth;
                     if (obstacleNoiseValue > _cratePlacementThreshold)
                     {
-                        PlaceCrate(obstacleLaneX, startPosition.y - 0.30f, startPosition.z + currentZ);
+                        float obstacleLaneX = _startPosition.x - lane * Constants.NUM_OF_LANES;
+                        PlaceCrate(obstacleLaneX, _startPosition.y - 0.30f, _startPosition.z + currentZ);
                         laneFilled[lane] = true;
                     }
                 }
@@ -82,14 +75,14 @@ public class LanePopulator : MonoBehaviour
                     float columnNoise = Mathf.PerlinNoise(_columnPerlinOffset, currentZ * _columnPerlinScale + lane);
                     if (columnNoise > _columnPlacementThreshold)
                     {
-                        float columnX = startPosition.x - lane * 3.0f;
-                        PlaceColumn(columnX, startPosition.y - 0.3f, startPosition.z + currentZ);
+                        float columnX = _startPosition.x - lane * Constants.NUM_OF_LANES;
+                        PlaceColumn(columnX, _startPosition.y - 0.3f, _startPosition.z + currentZ);
                         laneFilled[lane] = true;
                     }
                 }
             }
 
-            //Place cars.
+            // Place cars.
             for (int lane = 0; lane < 3; lane++)
             {
                 if (!laneFilled[lane])
@@ -97,9 +90,9 @@ public class LanePopulator : MonoBehaviour
                     float carObstacleValue = Mathf.PerlinNoise(_carPerlinOffset, currentZ * _carPerlinScale + lane);
                     if (carObstacleValue > _carPlacementThreshold)
                     {
-                        float carX = startPosition.x - lane * _laneWidth;
-                        PlaceCarNewWay(carX, startPosition.y - _carYOffset, startPosition.z + currentZ);
-                        float carSpacing = UnityEngine.Random.Range(_minCarSpacing, _maxCarSpacing);
+                        float carX = _startPosition.x - lane * Constants.NUM_OF_LANES;
+                        PlaceCar(carX, _startPosition.y - Constants.CAR_Y_OFFSET, _startPosition.z + currentZ);
+                        float carSpacing = Random.Range(Constants.MIN_CAR_SPACING, Constants.MAX_CAR_SPACING);
                         currentZ += carSpacing;
                     }
                 }
@@ -149,9 +142,7 @@ public class LanePopulator : MonoBehaviour
         }
     }
 
-  
-
-    private void PlaceCarNewWay(float xPos, float yPos, float zPos)
+    private void PlaceCar(float xPos, float yPos, float zPos)
     {
         GameObject car = PoolManager.s_Instance.GetObject("Car");
         if (car != null)

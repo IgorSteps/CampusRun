@@ -25,6 +25,11 @@ public class MovingObstacle : MonoBehaviour
         {
             transform.Translate(_speed * Time.deltaTime * Vector3.back, Space.World);
         }
+        // Once passes the player - disable this script, so we don't do unnecessary explosion behind the player.
+        if (_player.transform.position.z - _moveOffset/2 > gameObject.transform.position.z)
+        {
+            this.enabled = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
