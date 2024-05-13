@@ -9,8 +9,10 @@ public class LanePopulator : MonoBehaviour
 {
     // Distance between rows of objects along the z-axis.
     private float _spacing = 1.0f;
-    // Scales for coin and obstacle Perlin noise. Controls how rapidly the path shifts between lanes. Lower means smoother, Higher makes it more abrupt.
-    private float _coinPerlinScale = 0.01f;
+    // Scales for coin and obstacle Perlin noise.
+    // Controls how rapidly the path shifts between lanes.
+    // Lower means smoother, higher makes it more abrupt.
+    private float _coinPerlinScale = 0.1f;
     private float _cratePerlinScale = 0.1f;
     private float _columnPerlinScale = 0.1f;
     private float _carPerlinScale = 0.1f;

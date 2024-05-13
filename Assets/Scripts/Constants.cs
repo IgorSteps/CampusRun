@@ -23,10 +23,14 @@ public class Constants
     public static readonly float DEFAULT_ROATION_SPEED = 1.0f;
 
     // Player.
-    public static readonly float DEFAULT_PLAYER_FORWARD_SPEED = 7.0f;
+    public static readonly float DEFAULT_PLAYER_START_FORWARD_SPEED = 5.0f;
+    public static readonly float DEFAULT_PLAYER_MAX_FORWARD_SPEED = 10.0f;
+    public static readonly float DEFAULT_PLAYER_ACCELERATION = 0.05f;
     public static readonly float DEFAULT_PLAYER_SIDE_SPEED = 4.0f;
     public static readonly float DOWNWARD_GRAVITY_FORCE = -10.0f;
     public static readonly float DEFAULT_JUMP_HEIGHT = 0.5f;
+    public static readonly float RUN_ON_TOP_OF_CRATE_THRESHOLD = 1.5f;
+    public static readonly float SIDE_COLLISION_THRESHOLD = 0.5f;
 
     // Lanes configurations.
     public static readonly int NUM_OF_LANES = 3;
@@ -37,6 +41,19 @@ public class Constants
     public static readonly float MIN_CAR_SPACING = 6.0f;
     public static readonly float MAX_CAR_SPACING = 10.0f;
 
+    // Car obstacle.
+    public static readonly float CAR_SPEED = 6.0f;
+    public static readonly float CAR_MOVE_OFFSET = 20.0f;
+
     // Crate placement.
     public static readonly float CRATE_Y_OFFSET = 0.3f;
+
+    // Camera.
+    public static readonly float SHAKE_FORCE = 0.05f;
+    public static readonly float SHAKE_DURATION = 0.5f;
+
+    // Durations for invincible and visibility effetcs
+    public static readonly float INVINIBILTIY_EFFECT_DURATION = 5f;
+    public static readonly float VISIBILITY_EFFECT_DURATION = 5f;
+    public static readonly float VISIBILITY_INTERVAL_DURATION = 0.2f;
 }
