@@ -7,6 +7,25 @@ TagManager:
   - Skip
   - Obstacle
   - Undefined
+  - Plates
+  - FrontRightWheel
+  - RearRightWheel
+  - Car
+  - RearLeftWheel
+  - SteeringWheel
+  - FrontLeftWheel
+  - Glass
+  - FracturedCrate
+  - Coin
+  - Magnet
+  - Section
+  - SmallRocks
+  - TreeStump
+  - Rock
+  - Tree3
+  - Tree
+  - Tree2
+  - Tile
   layers:
   - Default
   - TransparentFX
@@ -16,7 +35,7 @@ TagManager:
   - UI
   - Ground
   - Misc
-  - 
+  - Coin
   - 
   - 
   - 

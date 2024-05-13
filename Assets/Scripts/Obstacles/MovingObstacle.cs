@@ -49,14 +49,14 @@ public class MovingObstacle : MonoBehaviour
 
     void Explode(Collider crate)
     {
+        // Recycle old crate
+        crate.gameObject.transform.SetParent(null);
         PoolManager.s_Instance.ReturnObject(crate.gameObject);
-        
-        GameObject fracturedCrate = PoolManager.s_Instance.GetObject("FracturedCrate");
-        // Set parent to the section.
-        fracturedCrate.transform.SetParent(crate.gameObject.transform.parent);
-        // Set position to the position of the original create.
-        fracturedCrate.transform.position = crate.gameObject.transform.position;
 
+        // Get the fractured crate in its place.
+        GameObject fracturedCrate = PoolManager.s_Instance.GetObject("FracturedCrate");
+        fracturedCrate.transform.SetParent(crate.gameObject.transform.parent);
+        fracturedCrate.transform.position = crate.gameObject.transform.position;
         SetupFracturedCrate(fracturedCrate);
 
         foreach (Transform t in fracturedCrate.transform)
