@@ -24,11 +24,11 @@ public class LanePopulator : MonoBehaviour
     // Threshold controls obstacle density. Lower means more obstacles. Higher means decreased frequency.
     private float _cratePlacementThreshold = 0.6f;
     private float _columnPlacementThreshold = 0.6f;
-    private float _carPlacementThreshold = 0.8f;
-    private float _magnetPlacementThreshold = 0.9f;
+    private float _carPlacementThreshold =1f;
+    private float _magnetPlacementThreshold = 0.6f;
 
     // Constants.
-    private Vector3 _startPosition =Constants.START_POS;
+    private Vector3 _startPosition = Constants.START_POS;
 
     private void OnEnable()
     {
