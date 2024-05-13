@@ -21,18 +21,26 @@ public class Collision : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            float heigthDiff = other.transform.position.y - this.gameObject.transform.position.y;
-            if (heigthDiff > 1.5f)
+            Vector3 diff = other.transform.position - this.gameObject.transform.position;
+            float heightDiff = diff.y;
+            float horizontalDiff = Mathf.Abs(diff.x); // Makes sure it's positive for equality checks.
+
+            if (heightDiff > Constants.RUN_ON_TOP_OF_CRATE_THRESHOLD) // top collision.
             {
-                // Run on top of the obstacle.
                 return;
             }
-            else
+            else if (horizontalDiff > Constants.SIDE_COLLISION_THRESHOLD) // side collision.
+            {
+                _playerMovement.CurrentSpeed = Constants.DEFAULT_PLAYER_START_FORWARD_SPEED;
+                _playerMovement.ReturnToPreviousLane();
+            }
+            else // front collision.
             {
                 _playerMovement.enabled = false; // stop Player from moving.
-                _playerAnimator.Play("Stumble Backwards"); // play stumble animation.
+                _playerAnimator.Play("Stumble Backwards");
                 _endScreen.enabled = true; // show end screen.
             }
+
         }
     }
 }

@@ -23,12 +23,14 @@ public class Constants
     public static readonly float DEFAULT_ROATION_SPEED = 1.0f;
 
     // Player.
-    public static readonly float DEFAULT_PLAYER_START_FORWARD_SPEED = 4.0f;
+    public static readonly float DEFAULT_PLAYER_START_FORWARD_SPEED = 5.0f;
     public static readonly float DEFAULT_PLAYER_MAX_FORWARD_SPEED = 10.0f;
-    public static readonly float DEFAULT_PLAYER_ACCELERATION = 0.1f;
+    public static readonly float DEFAULT_PLAYER_ACCELERATION = 0.05f;
     public static readonly float DEFAULT_PLAYER_SIDE_SPEED = 4.0f;
     public static readonly float DOWNWARD_GRAVITY_FORCE = -10.0f;
     public static readonly float DEFAULT_JUMP_HEIGHT = 0.5f;
+    public static readonly float RUN_ON_TOP_OF_CRATE_THRESHOLD = 1.5f;
+    public static readonly float SIDE_COLLISION_THRESHOLD = 0.5f;
 
     // Lanes configurations.
     public static readonly int NUM_OF_LANES = 3;

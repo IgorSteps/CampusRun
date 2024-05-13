@@ -5,29 +5,24 @@ using UnityEngine.UIElements;
 public class Movement : MonoBehaviour
 {
     public LayerMask groundLayer;
-    private float _startSpeed = Constants.DEFAULT_PLAYER_START_FORWARD_SPEED;
-    private float _maxSpeed = Constants.DEFAULT_PLAYER_MAX_FORWARD_SPEED;
-    private float _sideSpeed = Constants.DEFAULT_PLAYER_SIDE_SPEED;
-    private float _acceleration = Constants.DEFAULT_PLAYER_ACCELERATION;
-    [SerializeField] private float _currentSpeed;
-    private float _upSpeed;
-    [SerializeField] private CharacterController _characterController;
-
+    public float CurrentSpeed;
     public GameObject _playerModel;
-    private Animator _playerAnimator;
+    [SerializeField] private CharacterController _characterController;
+    [SerializeField] private Animator _playerAnimator;
+    
 
-    // For moving.
+    private float _upSpeed;
     private int _currentLane = 1; // 0 = Left, 1 = Middle, 2 = Right
+    private int _previousLane = 1;
     private readonly float[] _lanePositions = { -3f, 0f, 3f };
     private Vector2 _movementInput;
-    private float jumpHeight = Constants.DEFAULT_JUMP_HEIGHT;
-    private float _gravity = Constants.DOWNWARD_GRAVITY_FORCE;
     private bool _isGrounded;
 
     void Start()
     {
-        _currentSpeed = _startSpeed;
+        CurrentSpeed = Constants.DEFAULT_PLAYER_START_FORWARD_SPEED;
         _playerAnimator = _playerModel.GetComponent<Animator>();
+        _characterController = gameObject.GetComponent<CharacterController>();
     }
 
     void Update()
@@ -39,30 +34,45 @@ public class Movement : MonoBehaviour
             _upSpeed = 0.0f;
         }
 
+        IncreaseSpeed();
+
         // Forward movement.
-        if (_currentSpeed < _maxSpeed)
-        {
-            _currentSpeed += _acceleration * Time.deltaTime;
-        }
-        Vector3 forwardMovement = _currentSpeed * Time.deltaTime * Vector3.forward;
+        Vector3 forwardMovement = CurrentSpeed * Time.deltaTime * Vector3.forward;
 
         // Jump movement.
         Vector3 jumpMovement = _upSpeed * Time.deltaTime * Vector3.up;
 
         // Side movement.
-        float targetXPosition = _lanePositions[_currentLane];
-        float newXPosition = Mathf.Lerp(transform.position.x, targetXPosition, Time.deltaTime * _sideSpeed);
-        Vector3 sideMovement = new Vector3(newXPosition - transform.position.x, 0, 0);
+        Vector3 sideMovement = MovePlayerSideways(_lanePositions[_currentLane]);
 
         // Always apply gravity.
-        _upSpeed += _gravity * Time.deltaTime;
+        ApplyGravity();
 
         // Combine.
         Vector3 finalMovement = forwardMovement + sideMovement + jumpMovement;
         _characterController.Move(finalMovement);
     }
 
-    bool IsGrounded()
+    public void ReturnToPreviousLane()
+    {
+        if (_previousLane != _currentLane)
+        {
+            float newXPosition = Mathf.Lerp(
+                transform.position.x,
+                _lanePositions[_previousLane],
+                (CurrentSpeed - 1.0f) * Time.deltaTime
+            );
+            gameObject.transform.position = new Vector3(
+                newXPosition - transform.position.x,
+                gameObject.transform.position.y,
+                gameObject.transform.position.z
+            );
+
+            _currentLane = _previousLane;
+        }
+    }
+
+    public bool IsGrounded()
     {
         Vector3 rayStart = transform.position;
         Vector3 rayDirection = Vector3.down;
@@ -105,14 +115,38 @@ public class Movement : MonoBehaviour
         else if (_movementInput.y > 0 && _isGrounded) // Jump
         {
             // Fancy maths to find speed required to reach jumpHeight using Earth's gravity.
-            _upSpeed += Mathf.Sqrt(-3.0f * _gravity * jumpHeight);
+            _upSpeed += Mathf.Sqrt(-3.0f * Constants.DOWNWARD_GRAVITY_FORCE * Constants.DEFAULT_JUMP_HEIGHT);
             _playerAnimator.SetTrigger("OnJump");
         }
 
-        // If the lane has changed, trigger the jump animation
+        // Reset current and previous lanes, this way of doing it allows us to keep track of both.
         if (newLane != _currentLane)
         {
+            _previousLane = _currentLane;
             _currentLane = newLane;
         }
+    }
+
+    private Vector3 MovePlayerSideways(float targetXPos)
+    {
+        float newXPosition = Mathf.Lerp(
+            transform.position.x,
+            targetXPos,
+            (CurrentSpeed - 1.0f) * Time.deltaTime
+        );
+        return new Vector3(newXPosition - transform.position.x, 0, 0);
+    }
+
+    private void IncreaseSpeed()
+    {
+        if (CurrentSpeed < Constants.DEFAULT_PLAYER_MAX_FORWARD_SPEED)
+        {
+            CurrentSpeed += Constants.DEFAULT_PLAYER_ACCELERATION * Time.deltaTime;
+        }
+    }
+
+    private void ApplyGravity()
+    {
+        _upSpeed += Constants.DOWNWARD_GRAVITY_FORCE * Time.deltaTime;
     }
 }
