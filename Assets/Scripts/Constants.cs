@@ -43,4 +43,8 @@ public class Constants
 
     // Crate placement.
     public static readonly float CRATE_Y_OFFSET = 0.3f;
+
+    // Camera.
+    public static readonly float SHAKE_FORCE = 0.05f;
+    public static readonly float SHAKE_DURATION = 0.5f;
 }
