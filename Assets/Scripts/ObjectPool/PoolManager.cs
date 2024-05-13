@@ -84,7 +84,7 @@ public class PoolManager : MonoBehaviour
         Poolable poolable = obj.GetComponent<Poolable>();
         if (poolable != null && _poolDictionary.ContainsKey(poolable.poolName))
         {
-            ResetObject(obj);
+            ResetRigidBodyObject(obj);
             obj.SetActive(false);
             _poolDictionary[poolable.poolName].Enqueue(obj);
         }
@@ -98,22 +98,13 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    //TODO: Find out if this is needed...
-    public void ResetObject(GameObject obj)
+    private void ResetRigidBodyObject(GameObject obj)
     {
-        // Don't do this because this resets the section design(grounds, tiles and mountains.)
-        // TODO: Programmatically setup dimensions of those thigs to allow for this?
-        //obj.transform.position = Vector3.zero;
-        //obj.transform.rotation = Quaternion.identity;
-        //obj.transform.localScale = Vector3.one;
-
-        // If has a rigidbody.
         var rb = obj.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-            // what else?
         }
     }
 }

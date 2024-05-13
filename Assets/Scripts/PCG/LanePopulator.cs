@@ -9,23 +9,26 @@ public class LanePopulator : MonoBehaviour
 {
     // Distance between rows of objects along the z-axis.
     private float _spacing = 1.0f;
-    // Scales for coin and obstacle Perlin noise. Controls how rapidly the path shifts between lanes. Higher means smoother, lower makes it more abrupt.
-    private float _coinPerlinScale = 0.1f;
+    // Scales for coin and obstacle Perlin noise. Controls how rapidly the path shifts between lanes. Lower means smoother, Higher makes it more abrupt.
+    private float _coinPerlinScale = 0.01f;
     private float _cratePerlinScale = 0.1f;
     private float _columnPerlinScale = 0.1f;
     private float _carPerlinScale = 0.1f;
+    private float _magnetPerlinScale = 0.1f;
     // Noise offsets for coin and obstacle.
     private float _coinPerlinOffset;
     private float _cratePerlinOffset;
     private float _columnPerlinOffset;
     private float _carPerlinOffset;
+    private float _magnetPerlinOffset;
     // Threshold controls obstacle density. Lower means more obstacles. Higher means decreased frequency.
     private float _cratePlacementThreshold = 0.6f;
     private float _columnPlacementThreshold = 0.6f;
     private float _carPlacementThreshold = 0.8f;
+    private float _magnetPlacementThreshold = 0.9f;
 
     // Constants.
-    private Vector3 _startPosition =Constants.START_POS;
+    private Vector3 _startPosition = Constants.START_POS;
 
     private void OnEnable()
     {
@@ -33,12 +36,14 @@ public class LanePopulator : MonoBehaviour
         _cratePerlinOffset = Random.Range(0f, 10000f);
         _columnPerlinOffset = Random.Range(0f, 10000f);
         _carPerlinOffset = Random.Range(0f, 10000f);
+        _magnetPerlinOffset = Random.Range(0f, 10000f);
         Populate();
     }
 
     private void Populate()
     {
         float currentZ = 0f;
+        bool magnetPlaced = false;
         while (currentZ < Constants.SECTION_LENGTH)
         {
             // To keep track which lanes are filled.
@@ -46,7 +51,7 @@ public class LanePopulator : MonoBehaviour
 
             // Place coins.
             float coinNoiseValue = Mathf.PerlinNoise(_coinPerlinOffset, currentZ * _coinPerlinScale);
-            int coinLaneIdx = Mathf.FloorToInt(coinNoiseValue * Constants.NUM_OF_LANES); // To floor nose value to 1,2 or 3.
+            int coinLaneIdx = Mathf.FloorToInt(coinNoiseValue * Constants.NUM_OF_LANES); // To floor noise value to 1,2 or 3.
             PlaceCoin(GetXPosition(coinLaneIdx), _startPosition.y, _startPosition.z + currentZ);
             laneFilled[coinLaneIdx] = true;
 
@@ -89,6 +94,21 @@ public class LanePopulator : MonoBehaviour
                         PlaceCar(GetXPosition(lane), _startPosition.y - Constants.CAR_Y_OFFSET, _startPosition.z + currentZ);
                         float carSpacing = Random.Range(Constants.MIN_CAR_SPACING, Constants.MAX_CAR_SPACING);
                         currentZ += carSpacing;
+                    }
+                }
+            }
+
+            // Place magnets.
+            for (int lane = 0; lane < 3; lane++)
+            {
+                if (!laneFilled[lane] && !magnetPlaced)
+                {
+                    float magnetValue = Mathf.PerlinNoise(_magnetPerlinOffset, currentZ * _magnetPerlinScale + lane);
+                    if (magnetValue > _magnetPlacementThreshold)
+                    {
+                        PlaceMagnet(GetXPosition(lane), _startPosition.y, _startPosition.z + currentZ);
+                        laneFilled[lane] = true;
+                        magnetPlaced = true; // ensure it is placed only once.
                     }
                 }
             }
@@ -165,6 +185,13 @@ public class LanePopulator : MonoBehaviour
             GameObject rrWheel = PoolManager.s_Instance.GetObject("RearRightWheel");
             rrWheel.transform.SetParent(car.transform, false);
         }
+    }
+
+    private void PlaceMagnet(float xPos, float yPos, float zPos)
+    {
+        GameObject magnet = PoolManager.s_Instance.GetObject("Magnet");
+        magnet.transform.position = new Vector3(xPos, yPos, zPos);
+        magnet.transform.SetParent(this.transform, false);
     }
 
     /// <summary>
