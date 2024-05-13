@@ -42,8 +42,8 @@ public class Collision : MonoBehaviour
                 _playerMovement.OnSideCollision();
                 if (!_shaker.IsShaking && !_playerInvinciblePowerUp.IsInvincible)
                 {
-                    StartCoroutine(_playerVisiblity.ToggleVisibility(5.0f, 0.2f));
-                    StartCoroutine(_playerInvinciblePowerUp.MakeInvincible(5.0f));
+                    StartCoroutine(_playerVisiblity.ToggleVisibility(Constants.VISIBILITY_EFFECT_DURATION, Constants.VISIBILITY_INTERVAL_DURATION));
+                    StartCoroutine(_playerInvinciblePowerUp.MakeInvincible(Constants.INVINIBILTIY_EFFECT_DURATION));
                     StartCoroutine(_shaker.Shake());
                 }
             }

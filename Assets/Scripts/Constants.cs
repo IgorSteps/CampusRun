@@ -51,4 +51,9 @@ public class Constants
     // Camera.
     public static readonly float SHAKE_FORCE = 0.05f;
     public static readonly float SHAKE_DURATION = 0.5f;
+
+    // Durations for invincible and visibility effetcs
+    public static readonly float INVINIBILTIY_EFFECT_DURATION = 5f;
+    public static readonly float VISIBILITY_EFFECT_DURATION = 5f;
+    public static readonly float VISIBILITY_INTERVAL_DURATION = 0.2f;
 }
