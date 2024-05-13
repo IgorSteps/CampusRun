@@ -8,6 +8,8 @@ public class Collision : MonoBehaviour
 {
     private ShowEndScreen _endScreen;
     private Movement _playerMovement;
+    private Invincible _playerInvinciblePowerUp;
+    private Visibility _playerVisiblity;
     private Animator _playerAnimator;
     private GameObject _mainCamera;
     private CameraShake _shaker;
@@ -16,6 +18,8 @@ public class Collision : MonoBehaviour
     {
         _endScreen = GameObject.Find("Screen").GetComponent<ShowEndScreen>();
         _playerMovement = GameObject.Find("Player").GetComponent<Movement>();
+        _playerInvinciblePowerUp = GameObject.Find("Player").GetComponent<Invincible>();
+        _playerVisiblity = GameObject.Find("Player").GetComponent<Visibility>();
         _playerAnimator = GameObject.Find("Aj@Running").GetComponent<Animator>();
         _mainCamera = GameObject.Find("Main Camera");
         _shaker = _mainCamera.GetComponent<CameraShake>();
@@ -23,7 +27,7 @@ public class Collision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && !_playerInvinciblePowerUp.IsInvincible)
         {
             Vector3 diff = other.transform.position - this.gameObject.transform.position;
             float heightDiff = diff.y;
@@ -35,10 +39,11 @@ public class Collision : MonoBehaviour
             }
             else if (horizontalDiff > Constants.SIDE_COLLISION_THRESHOLD) // Side collision.
             {
-                _playerMovement.CurrentSpeed = Constants.DEFAULT_PLAYER_START_FORWARD_SPEED;
-                _playerMovement.ReturnToPreviousLane();
-                if (!_shaker.IsShaking)
+                _playerMovement.OnSideCollision();
+                if (!_shaker.IsShaking && !_playerInvinciblePowerUp.IsInvincible)
                 {
+                    StartCoroutine(_playerVisiblity.ToggleVisibility(5.0f, 0.2f));
+                    StartCoroutine(_playerInvinciblePowerUp.MakeInvincible(5.0f));
                     StartCoroutine(_shaker.Shake());
                 }
             }

@@ -131,6 +131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1150559821}
     m_Modifications:
+    - target: {fileID: -8887491248750792259, guid: 2de55b2fa9329b84c864a24f0e75c988, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2de55b2fa9329b84c864a24f0e75c988, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.1107694
@@ -183,9 +187,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6964311229977154457, guid: 2de55b2fa9329b84c864a24f0e75c988, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3955959844354832868, guid: 2de55b2fa9329b84c864a24f0e75c988, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -990452658993556300, guid: 2de55b2fa9329b84c864a24f0e75c988, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2de55b2fa9329b84c864a24f0e75c988, type: 3}
       propertyPath: m_Name
       value: Aj@Running
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2de55b2fa9329b84c864a24f0e75c988, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904272782776986279, guid: 2de55b2fa9329b84c864a24f0e75c988, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -1187,6 +1211,8 @@ GameObject:
   - component: {fileID: 1150559823}
   - component: {fileID: 1150559824}
   - component: {fileID: 1150559825}
+  - component: {fileID: 1150559826}
+  - component: {fileID: 1150559827}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1377,6 +1403,31 @@ MonoBehaviour:
   coinLayer:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &1150559826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150559817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06717a06197bcfd438ef7d0e4cab40f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsInvincible: 0
+--- !u!114 &1150559827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150559817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d730c1244be7b0d40ae5e6f1c30891a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1363845757
 GameObject:
   m_ObjectHideFlags: 0

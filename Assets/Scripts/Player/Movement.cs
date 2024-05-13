@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -9,7 +10,6 @@ public class Movement : MonoBehaviour
     public GameObject _playerModel;
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private Animator _playerAnimator;
-    
 
     private float _upSpeed;
     private int _currentLane = 1; // 0 = Left, 1 = Middle, 2 = Right
@@ -53,7 +53,13 @@ public class Movement : MonoBehaviour
         _characterController.Move(finalMovement);
     }
 
-    public void ReturnToPreviousLane()
+    public void OnSideCollision()
+    {
+        CurrentSpeed = Constants.DEFAULT_PLAYER_START_FORWARD_SPEED;
+        ReturnToPreviousLane();
+    }
+
+    private void ReturnToPreviousLane()
     {
         if (_previousLane != _currentLane)
         {
