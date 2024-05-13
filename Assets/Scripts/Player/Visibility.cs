@@ -13,16 +13,10 @@ public class Visibility : MonoBehaviour
     public IEnumerator ToggleVisibility(float duration, float interval)
     {
         float timeElapsed = 0f;
-
         while (timeElapsed < duration)
         {
-            // Toggle visibility
-            _renderer.enabled = !_renderer.enabled;
-
-            // Wait for the specified interval before toggling again
+            _renderer.enabled = false;
             yield return new WaitForSeconds(interval);
-
-            // Increment the time elapsed
             timeElapsed += interval;
         }
 

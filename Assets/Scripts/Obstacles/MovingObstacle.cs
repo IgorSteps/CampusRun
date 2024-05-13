@@ -4,29 +4,29 @@ using UnityEngine;
 
 public class MovingObstacle : MonoBehaviour
 {
-    [SerializeField] float _speed = 6.0f;
-    [SerializeField] float _moveOffset = 20.0f;
     private ShowEndScreen _endScreen;
     private Movement _playerMovement;
+    private Invincible _playerInvinciblePowerUp;
     private Animator _playerAnimator;
     private GameObject _player;
 
     public void Start()
     {
-        _endScreen = GameObject.Find("Screen").GetComponent<ShowEndScreen>();
-        _playerMovement = GameObject.Find("Player").GetComponent<Movement>();
-        _playerAnimator = GameObject.Find("Aj@Running").GetComponent<Animator>();
         _player = GameObject.Find("Player");
+        _endScreen = GameObject.Find("Screen").GetComponent<ShowEndScreen>();
+        _playerMovement = _player.GetComponent<Movement>();
+        _playerAnimator = GameObject.Find("Aj@Running").GetComponent<Animator>();
+        _playerInvinciblePowerUp = _player.GetComponent<Invincible>();
     }
 
     void Update()
     {
-        if (_player.transform.position.z + _moveOffset > gameObject.transform.position.z)
+        if (_player.transform.position.z + Constants.CAR_MOVE_OFFSET > gameObject.transform.position.z)
         {
-            transform.Translate(_speed * Time.deltaTime * Vector3.back, Space.World);
+            transform.Translate(Constants.CAR_SPEED * Time.deltaTime * Vector3.back, Space.World);
         }
         // Once passes the player - disable this script, so we don't do unnecessary explosion behind the player.
-        if (_player.transform.position.z - _moveOffset/2 > gameObject.transform.position.z)
+        if (_player.transform.position.z - Constants.CAR_MOVE_OFFSET / 2 > gameObject.transform.position.z)
         {
             this.enabled = false;
         }
@@ -34,7 +34,7 @@ public class MovingObstacle : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !_playerInvinciblePowerUp.IsInvincible)
         {
             _playerMovement.enabled = false; // stop Player from moving.
             _playerAnimator.Play("Stumble Backwards"); // play stumble animation.

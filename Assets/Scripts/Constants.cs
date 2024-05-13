@@ -41,6 +41,10 @@ public class Constants
     public static readonly float MIN_CAR_SPACING = 6.0f;
     public static readonly float MAX_CAR_SPACING = 10.0f;
 
+    // Car obstacle.
+    public static readonly float CAR_SPEED = 6.0f;
+    public static readonly float CAR_MOVE_OFFSET = 20.0f;
+
     // Crate placement.
     public static readonly float CRATE_Y_OFFSET = 0.3f;
 
