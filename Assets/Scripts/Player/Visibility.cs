@@ -15,7 +15,8 @@ public class Visibility : MonoBehaviour
         float timeElapsed = 0f;
         while (timeElapsed < duration)
         {
-            _renderer.enabled = false;
+            _renderer.enabled = !_renderer.enabled;
+
             yield return new WaitForSeconds(interval);
             timeElapsed += interval;
         }
