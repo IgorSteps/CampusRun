@@ -5,9 +5,12 @@ using UnityEngine.UIElements;
 public class Movement : MonoBehaviour
 {
     public LayerMask groundLayer;
-    [SerializeField] private float _frontSpeed = Constants.DEFAULT_PLAYER_FORWARD_SPEED;
-    [SerializeField] private float _sideSpeed = Constants.DEFAULT_PLAYER_SIDE_SPEED;
-    [SerializeField] private float _upSpeed;
+    private float _startSpeed = Constants.DEFAULT_PLAYER_START_FORWARD_SPEED;
+    private float _maxSpeed = Constants.DEFAULT_PLAYER_MAX_FORWARD_SPEED;
+    private float _sideSpeed = Constants.DEFAULT_PLAYER_SIDE_SPEED;
+    private float _acceleration = Constants.DEFAULT_PLAYER_ACCELERATION;
+    [SerializeField] private float _currentSpeed;
+    private float _upSpeed;
     [SerializeField] private CharacterController _characterController;
 
     public GameObject _playerModel;
@@ -23,6 +26,7 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        _currentSpeed = _startSpeed;
         _playerAnimator = _playerModel.GetComponent<Animator>();
     }
 
@@ -34,9 +38,13 @@ public class Movement : MonoBehaviour
         {
             _upSpeed = 0.0f;
         }
-     
+
         // Forward movement.
-        Vector3 forwardMovement = _frontSpeed * Time.deltaTime * Vector3.forward;
+        if (_currentSpeed < _maxSpeed)
+        {
+            _currentSpeed += _acceleration * Time.deltaTime;
+        }
+        Vector3 forwardMovement = _currentSpeed * Time.deltaTime * Vector3.forward;
 
         // Jump movement.
         Vector3 jumpMovement = _upSpeed * Time.deltaTime * Vector3.up;
