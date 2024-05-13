@@ -9,8 +9,8 @@ public class LanePopulator : MonoBehaviour
 {
     // Distance between rows of objects along the z-axis.
     private float _spacing = 1.0f;
-    // Scales for coin and obstacle Perlin noise. Controls how rapidly the path shifts between lanes. Higher means smoother, lower makes it more abrupt.
-    private float _coinPerlinScale = 0.1f;
+    // Scales for coin and obstacle Perlin noise. Controls how rapidly the path shifts between lanes. Lower means smoother, Higher makes it more abrupt.
+    private float _coinPerlinScale = 0.01f;
     private float _cratePerlinScale = 0.1f;
     private float _columnPerlinScale = 0.1f;
     private float _carPerlinScale = 0.1f;
@@ -24,8 +24,8 @@ public class LanePopulator : MonoBehaviour
     // Threshold controls obstacle density. Lower means more obstacles. Higher means decreased frequency.
     private float _cratePlacementThreshold = 0.6f;
     private float _columnPlacementThreshold = 0.6f;
-    private float _carPlacementThreshold =1f;
-    private float _magnetPlacementThreshold = 0.6f;
+    private float _carPlacementThreshold = 0.8f;
+    private float _magnetPlacementThreshold = 0.9f;
 
     // Constants.
     private Vector3 _startPosition = Constants.START_POS;
@@ -51,7 +51,7 @@ public class LanePopulator : MonoBehaviour
 
             // Place coins.
             float coinNoiseValue = Mathf.PerlinNoise(_coinPerlinOffset, currentZ * _coinPerlinScale);
-            int coinLaneIdx = Mathf.FloorToInt(coinNoiseValue * Constants.NUM_OF_LANES); // To floor nose value to 1,2 or 3.
+            int coinLaneIdx = Mathf.FloorToInt(coinNoiseValue * Constants.NUM_OF_LANES); // To floor noise value to 1,2 or 3.
             PlaceCoin(GetXPosition(coinLaneIdx), _startPosition.y, _startPosition.z + currentZ);
             laneFilled[coinLaneIdx] = true;
 
@@ -108,7 +108,7 @@ public class LanePopulator : MonoBehaviour
                     {
                         PlaceMagnet(GetXPosition(lane), _startPosition.y, _startPosition.z + currentZ);
                         laneFilled[lane] = true;
-                        magnetPlaced = true;
+                        magnetPlaced = true; // ensure it is placed only once.
                     }
                 }
             }
