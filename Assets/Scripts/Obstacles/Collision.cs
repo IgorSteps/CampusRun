@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -6,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class Collision : MonoBehaviour
 {
+    [SerializeField] private GameObject _livesGO;
+    [SerializeField]  private TextMeshProUGUI _livesNumber;
     private ShowEndScreen _endScreen;
     private Movement _playerMovement;
     private Invincible _playerInvinciblePowerUp;
@@ -23,6 +26,8 @@ public class Collision : MonoBehaviour
         _playerAnimator = GameObject.Find("Aj@Running").GetComponent<Animator>();
         _mainCamera = GameObject.Find("Main Camera");
         _shaker = _mainCamera.GetComponent<CameraShake>();
+        _livesGO = GameObject.Find("LivesNumber");
+        _livesNumber = _livesGO.GetComponent<TextMeshProUGUI>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,9 +47,21 @@ public class Collision : MonoBehaviour
                 _playerMovement.OnSideCollision();
                 if (!_shaker.IsShaking && !_playerInvinciblePowerUp.IsInvincible)
                 {
-                    StartCoroutine(_playerVisiblity.ToggleVisibility(Constants.VISIBILITY_EFFECT_DURATION, Constants.VISIBILITY_INTERVAL_DURATION));
-                    StartCoroutine(_playerInvinciblePowerUp.MakeInvincible(Constants.INVINIBILTIY_EFFECT_DURATION));
-                    StartCoroutine(_shaker.Shake());
+                    int livesNum = int.Parse(_livesNumber.text);
+                    livesNum -= 1;
+                    _livesNumber.text = livesNum.ToString();
+                    if (livesNum == 0)
+                    {
+                        _playerMovement.enabled = false; // stop Player from moving.
+                        _playerAnimator.Play("Stumble Backwards");
+                        _endScreen.enabled = true; // show end screen.
+                    }
+                    else
+                    {
+                        StartCoroutine(_playerVisiblity.ToggleVisibility(Constants.VISIBILITY_EFFECT_DURATION, Constants.VISIBILITY_INTERVAL_DURATION));
+                        StartCoroutine(_playerInvinciblePowerUp.MakeInvincible(Constants.INVINIBILTIY_EFFECT_DURATION));
+                        StartCoroutine(_shaker.Shake());
+                    }
                 }
             }
             else // Front collision.
