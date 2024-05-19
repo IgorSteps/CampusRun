@@ -1,4 +1,4 @@
-# Campus Run
+# Crazy Run
 
 [Task tracing](https://trello.com/b/YfJmtDgr/campusdash)
 
